@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://dwcryvtjvl8xm"]
+
+[ext_resource type="Texture2D" uid="uid://bfrdk5a5ib2xd" path="res://world/assets/backgrounds/Desert/background1.png" id="1_5577o"]
+[ext_resource type="Texture2D" uid="uid://boy21eogunn7x" path="res://world/assets/backgrounds/Desert/background2.png" id="2_3wox4"]
+[ext_resource type="Texture2D" uid="uid://dtj5v2sr43jq0" path="res://world/assets/backgrounds/Desert/background3.png" id="3_ca1mq"]
+[ext_resource type="Texture2D" uid="uid://duipbqqurlbr" path="res://world/assets/backgrounds/Desert/cloud1.png" id="4_2rvx6"]
+[ext_resource type="Texture2D" uid="uid://d3pi6h52v18gq" path="res://world/assets/backgrounds/Desert/cloud2.png" id="5_a2ehg"]
+[ext_resource type="Texture2D" uid="uid://bgllpjyn3yhjk" path="res://world/assets/backgrounds/Desert/cloud3.png" id="6_wnybq"]
+[ext_resource type="Texture2D" uid="uid://cdt6fq5cbsxdu" path="res://world/assets/backgrounds/Desert/cloud4.png" id="7_n1k0c"]
+[ext_resource type="Texture2D" uid="uid://db1cxhigcb3yx" path="res://world/assets/backgrounds/Desert/cloud5.png" id="8_qf2k5"]
+[ext_resource type="Texture2D" uid="uid://cnj3cv8smtctm" path="res://world/assets/backgrounds/Desert/cloud6.png" id="9_gkl75"]
+[ext_resource type="Texture2D" uid="uid://bf2cfkadirkoh" path="res://world/assets/backgrounds/Desert/cloud7.png" id="10_eybbh"]
+[ext_resource type="Texture2D" uid="uid://df4x1u3sfjcjk" path="res://world/assets/backgrounds/Desert/cloud8.png" id="11_lyqp8"]
+[ext_resource type="Texture2D" uid="uid://d00n1pk5gnv0q" path="res://world/assets/tiles/castle/brick_castle4.png" id="12_6m5yo"]
+[ext_resource type="Texture2D" uid="uid://drkqlpdd1ex4" path="res://world/assets/tiles/castle/brick_castle.png" id="13_3wox4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7sjy"]
+size = Vector2(512, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vr8db"]
+size = Vector2(31.5, 97.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ca1mq"]
+size = Vector2(511, 117.5)
+
+[node name="StartLocation" type="Node2D" unique_id=316033101]
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=913431267]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1837011399]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1340652615]
+motion_scale = Vector2(0.05, 0.05)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=944336887]
+texture = ExtResource("1_5577o")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" unique_id=623530600]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=1915537492]
+texture = ExtResource("2_3wox4")
+centered = false
+
+[node name="Background2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2" unique_id=399078669]
+position = Vector2(0, 4)
+texture = ExtResource("3_ca1mq")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground" unique_id=378652200]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(640, 0)
+
+[node name="Cloud" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1211462471]
+position = Vector2(347, 228)
+texture = ExtResource("4_2rvx6")
+offset = Vector2(-320, 0)
+
+[node name="Cloud2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=274396067]
+position = Vector2(449, 268)
+texture = ExtResource("5_a2ehg")
+offset = Vector2(-320, 0)
+
+[node name="Cloud3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=662368216]
+position = Vector2(505, 192)
+texture = ExtResource("6_wnybq")
+offset = Vector2(-320, 0)
+
+[node name="Cloud4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1543978942]
+position = Vector2(627, 247)
+texture = ExtResource("7_n1k0c")
+offset = Vector2(-320, 0)
+
+[node name="Cloud5" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1708102108]
+position = Vector2(706, 172)
+texture = ExtResource("8_qf2k5")
+offset = Vector2(-320, 0)
+
+[node name="Cloud6" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1562049643]
+position = Vector2(743, 227)
+texture = ExtResource("9_gkl75")
+offset = Vector2(-320, 0)
+
+[node name="Cloud7" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=1979877980]
+position = Vector2(830, 272)
+texture = ExtResource("10_eybbh")
+offset = Vector2(-320, 0)
+
+[node name="Cloud8" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3" unique_id=2064242081]
+position = Vector2(856, 207)
+texture = ExtResource("11_lyqp8")
+offset = Vector2(-320, 0)
+
+[node name="WorldScale" type="Node2D" parent="." unique_id=283548112]
+scale = Vector2(1.1, 1.1)
+
+[node name="Floor" type="StaticBody2D" parent="WorldScale" unique_id=857434285]
+
+[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor" unique_id=240832898]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 502.0
+offset_bottom = 22.0
+texture = ExtResource("12_6m5yo")
+stretch_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor" unique_id=1683320310]
+position = Vector2(246, 6)
+shape = SubResource("RectangleShape2D_u7sjy")
+
+[node name="Floor2" type="StaticBody2D" parent="WorldScale" unique_id=419611764]
+
+[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor2" unique_id=2032812956]
+offset_left = 276.0
+offset_top = -157.0
+offset_right = 308.0
+offset_bottom = -59.0
+texture = ExtResource("12_6m5yo")
+stretch_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor2" unique_id=768398738]
+position = Vector2(292, -108.25)
+shape = SubResource("RectangleShape2D_vr8db")
+
+[node name="Floor3" type="StaticBody2D" parent="WorldScale" unique_id=629982509]
+
+[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor3" unique_id=1865689997]
+offset_left = -10.0
+offset_top = 22.0
+offset_right = 502.0
+offset_bottom = 140.0
+texture = ExtResource("13_3wox4")
+stretch_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor3" unique_id=1318620170]
+position = Vector2(246, 81.25)
+shape = SubResource("RectangleShape2D_ca1mq")

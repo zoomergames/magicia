@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://5wrikah25b6d"]
+
+[ext_resource type="Texture2D" uid="uid://dra5le53p6e37" path="res://entities/npc/emilia/emilia.png" id="1_i2lsl"]
+[ext_resource type="Script" uid="uid://p02n8x858xck" path="res://entities/npc/emilia/emilia.gd" id="1_ilqko"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ilqko"]
+height = 44.0
+
+[node name="Emilia" type="Area2D" unique_id=847629978]
+script = ExtResource("1_ilqko")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1731230026]
+unique_name_in_owner = true
+texture = ExtResource("1_i2lsl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=335092092]
+position = Vector2(2, 3)
+shape = SubResource("CapsuleShape2D_ilqko")

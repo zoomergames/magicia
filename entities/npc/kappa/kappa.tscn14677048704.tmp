@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://d3n0u7k42ctb1"]
+
+[ext_resource type="Script" uid="uid://55disi3uh2tk" path="res://entities/npc/kappa/kappa.gd" id="1_pyk5d"]
+[ext_resource type="Texture2D" uid="uid://d0yt0j035ggwb" path="res://entities/npc/kappa/kappa.png" id="1_v3ybj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pyk5d"]
+size = Vector2(20, 44)
+
+[node name="Kappa" type="Area2D" unique_id=1534572424]
+script = ExtResource("1_pyk5d")
+label_offset_y = null
+npc_name = "Каппа"
+color_name = Color(4.3317675e-07, 0.59463614, 5.7756904e-07, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2036285186]
+unique_name_in_owner = true
+texture = ExtResource("1_v3ybj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1675306595]
+shape = SubResource("RectangleShape2D_pyk5d")

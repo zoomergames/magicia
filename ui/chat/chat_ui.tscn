@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://ll3xyb1moxi5"]
+
+[ext_resource type="Script" uid="uid://didhpi050lft2" path="res://ui/chat/chat_ui.gd" id="1_md7lx"]
+[ext_resource type="FontFile" uid="uid://ymuoahxdj2bh" path="res://ui/font/VCR OSD Mono Nova/VCROSDMonoNova.ttf" id="2_fu7if"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6koi3"]
+bg_color = Color(0, 0, 0, 0.15294118)
+
+[node name="ChatUI" type="CanvasLayer" unique_id=1377273628]
+script = ExtResource("1_md7lx")
+
+[node name="Panel" type="Panel" parent="." unique_id=1368687187]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -284.0
+offset_bottom = 66.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6koi3")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel" unique_id=2098344509]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 283.0
+offset_bottom = 64.0
+theme_override_fonts/normal_font = ExtResource("2_fu7if")
+theme_override_fonts/bold_font = ExtResource("2_fu7if")
+theme_override_fonts/bold_italics_font = ExtResource("2_fu7if")
+theme_override_fonts/italics_font = ExtResource("2_fu7if")
+theme_override_fonts/mono_font = ExtResource("2_fu7if")
+theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/bold_font_size = 12
+theme_override_font_sizes/bold_italics_font_size = 12
+theme_override_font_sizes/italics_font_size = 12
+theme_override_font_sizes/mono_font_size = 12
+bbcode_enabled = true
+scroll_following = true
+
+[node name="NameInput" type="LineEdit" parent="." unique_id=292664412]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -95.0
+offset_top = -15.5
+offset_right = 97.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_fu7if")
+placeholder_text = "Введите ваш ник"
+alignment = 1
+max_length = 13
