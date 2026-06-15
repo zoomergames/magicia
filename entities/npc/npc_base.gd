@@ -8,6 +8,8 @@ extends Area2D
 @onready var sprite = %Sprite2D
 var name_label: Label = null
 
+var dialogue_controller = null
+
 func _ready() -> void:
 	input_pickable = true
 	_create_hover_label()
@@ -52,3 +54,9 @@ func _input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int) -> vo
 # Пустая функция-заглушка. Её перепишет каждый конкретный NPC под себя
 func start_npc_dialogue() -> void:
 	pass
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Если диалог идет, и текущий спикер — это Я
+	if Global.is_dialogue_active and Global.current_speaker == self:
+		if dialogue_controller and dialogue_controller.has_method("handle_input"):
+			dialogue_controller.handle_input(event)

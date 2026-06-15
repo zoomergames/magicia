@@ -1,4 +1,7 @@
 extends Node
+
+signal chat_message_received
+
 var current_speaker: Node2D = null # Ссылка на того, кто СЕЙЧАС говорит с игроком
 
 var player_name: String = "Безымянный"; # ник по умолчанию
@@ -40,6 +43,7 @@ func update_hearts_display() -> void:
 func log_to_chat(message: String) -> void: # логика игровой панели чата
 	if chat_node != null:
 		chat_node.append_text(message + "\n")
+		chat_message_received.emit() # Пинаем чат, чтобы он проснулся!
 	else:
 		print("[Система] Чат еще не готов: ", message)
 		

@@ -1,17 +1,20 @@
 extends RefCounted
 
-var goddess_node: Node2D = null # Ссылка на богиню, заполнится автоматически
+var goddess_node: Node2D = null
 var dialogue_step: int = 0
 var was_met: bool = false
 
 func start() -> void:
 	dialogue()
 	
-func handle_input(_event: InputEvent) -> void:
-	# Если открыто поле ввода имени — жестко блокируем пролистывание
+func handle_input(event: InputEvent) -> void:
 	if Global.name_input_node and Global.name_input_node.visible:
 		return
-	dialogue()
+		
+	if event.is_action_pressed("ui_accept"):
+		# Стоп-кран для инпута: съедаем нажатие, чтобы оно не пролистало следующий шаг!
+		goddess_node.get_viewport().set_input_as_handled()
+		dialogue()
 
 func dialogue() -> void:
 	dialogue_step += 1
@@ -37,7 +40,9 @@ func dialogue() -> void:
 			end_dialogue()
 	else:
 		# ЛОГИКА ПОВТОРНОЙ ВСТРЕЧИ
+		if dialogue_step == 1:
 			Global.log_to_chat("%s [b][color=white]А, это снова ты, [i][color=orange]%s[/color][/i]? Хватит в меня тыкать, иди спасай мир![/color][/b]" % [prefix, Global.player_name])
+		elif dialogue_step == 2:
 			end_dialogue()
 
 # СЮДА уехала вся логика сохранения имени игрока

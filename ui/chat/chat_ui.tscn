@@ -10,6 +10,7 @@ bg_color = Color(0, 0, 0, 0.15294118)
 script = ExtResource("1_md7lx")
 
 [node name="Panel" type="Panel" parent="." unique_id=1368687187]
+unique_name_in_owner = true
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -23,6 +24,7 @@ unique_name_in_owner = true
 layout_mode = 1
 offset_right = 283.0
 offset_bottom = 64.0
+mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("2_fu7if")
 theme_override_fonts/bold_font = ExtResource("2_fu7if")
 theme_override_fonts/bold_italics_font = ExtResource("2_fu7if")
@@ -54,3 +56,6 @@ theme_override_fonts/font = ExtResource("2_fu7if")
 placeholder_text = "Введите ваш ник"
 alignment = 1
 max_length = 13
+
+[connection signal="mouse_entered" from="Panel" to="." method="_on_panel_mouse_entered"]
+[connection signal="mouse_exited" from="Panel" to="." method="_on_panel_mouse_exited"]

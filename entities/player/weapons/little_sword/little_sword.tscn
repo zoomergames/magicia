@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dinyql5tr8f2c"]
+
+[ext_resource type="Texture2D" uid="uid://bncsyrmiqt131" path="res://entities/player/weapons/little_sword/small_sword.png" id="1_bqsul"]
+[ext_resource type="Script" uid="uid://ckvac6l0eko2u" path="res://entities/player/weapons/little_sword/little_sword.gd" id="1_tmba2"]
+
+[node name="LittleSword" type="Node2D" unique_id=343276945]
+script = ExtResource("1_tmba2")
+
+[node name="SwordSprite" type="Sprite2D" parent="." unique_id=485340027]
+position = Vector2(-5, -11)
+texture = ExtResource("1_bqsul")
+centered = false

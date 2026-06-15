@@ -14,6 +14,7 @@ var max_base_hp: int = 100
 var max_magic_hp: int = 100
 
 @onready var sprite = %Sprite2D
+@onready var weapon_slot = %WeaponSlot
 
 func _ready():
 	spawn_point = global_position
@@ -70,6 +71,14 @@ func _physics_process(delta: float) -> void:
 		sprite.flip_h = true
 	if direction > 0:
 		sprite.flip_h = false
+		
+	# ФУНКЦИЯ АТТАКИ
+	
+	if !(is_frozen or is_dead) and Input.is_action_just_pressed("attack"): #закон де моргана - игрок НЕ заморожен И НЕ умер так ещё и нажал на лкм
+		if weapon_slot.get_child_count() > 0:
+			var current_weapon = weapon_slot.get_child(0)
+			current_weapon.try_attack()
+			print("Хоба!")
 		
 	move_and_slide()
 	

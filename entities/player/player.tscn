@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://belynuc1i5v3l" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="Texture2D" uid="uid://bgi3pik5rksqc" path="res://entities/player/player.png" id="1_symyc"]
+[ext_resource type="PackedScene" uid="uid://dinyql5tr8f2c" path="res://entities/player/weapons/little_sword/little_sword.tscn" id="3_sglur"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abrql"]
 size = Vector2(20, 51)
@@ -21,3 +22,9 @@ shape = SubResource("RectangleShape2D_abrql")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=109021886]
 process_callback = 0
+
+[node name="WeaponSlot" type="Node2D" parent="." unique_id=1321964726]
+unique_name_in_owner = true
+position = Vector2(9, 23)
+
+[node name="LittleSword" parent="WeaponSlot" unique_id=343276945 instance=ExtResource("3_sglur")]

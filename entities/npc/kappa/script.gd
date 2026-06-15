@@ -8,8 +8,12 @@ func start() -> void:
 	dialogue()
 
 func handle_input(event: InputEvent) -> void:
-		if Global.name_input_node and Global.name_input_node.visible:
-			return
+	if Global.name_input_node and Global.name_input_node.visible:
+		return
+		
+	if event.is_action_pressed("ui_accept"):
+		# Стоп-кран для инпута: съедаем нажатие, чтобы оно не пролистало следующий шаг!
+		kappa_node.get_viewport().set_input_as_handled()
 		dialogue()
 
 func dialogue() -> void:
