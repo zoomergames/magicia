@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://belynuc1i5v3l" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="Texture2D" uid="uid://bjgeuv3a2nrk3" path="res://entities/player/player_template.png" id="2_bls4j"]
+[ext_resource type="PackedScene" uid="uid://b4mnv57gs08ya" path="res://entities/player/player_camera.tscn" id="3_8fjmc"]
 [ext_resource type="PackedScene" uid="uid://smefc3j1vjsl" path="res://items/armors/super_costume/super_costume.tscn" id="3_fkugw"]
+[ext_resource type="Script" uid="uid://dpc1jyd5vjmsc" path="res://entities/player/player_camera.gd" id="4_qiwj3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abrql"]
 size = Vector2(20, 51)
@@ -21,8 +23,8 @@ texture = ExtResource("2_bls4j")
 position = Vector2(0, 10.5)
 shape = SubResource("RectangleShape2D_abrql")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=109021886]
-process_callback = 0
+[node name="PlayerCamera" parent="." unique_id=816380692 instance=ExtResource("3_8fjmc")]
+script = ExtResource("4_qiwj3")
 
 [node name="ArmorSlot" type="Node2D" parent="." unique_id=1593787647]
 unique_name_in_owner = true

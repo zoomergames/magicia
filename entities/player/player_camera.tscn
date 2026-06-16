@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b4mnv57gs08ya"]
+
+[node name="PlayerCamera" type="Camera2D" unique_id=816380692]
+process_callback = 0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
