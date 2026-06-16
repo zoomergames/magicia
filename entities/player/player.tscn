@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://d002lxgwtbbh8"]
 
 [ext_resource type="Script" uid="uid://belynuc1i5v3l" path="res://entities/player/player.gd" id="1_abrql"]
-[ext_resource type="Texture2D" uid="uid://bgi3pik5rksqc" path="res://entities/player/player.png" id="1_symyc"]
+[ext_resource type="Texture2D" uid="uid://bjgeuv3a2nrk3" path="res://entities/player/player_template.png" id="2_bls4j"]
+[ext_resource type="PackedScene" uid="uid://smefc3j1vjsl" path="res://items/armors/super_costume/super_costume.tscn" id="3_fkugw"]
 [ext_resource type="PackedScene" uid="uid://dinyql5tr8f2c" path="res://entities/player/weapons/little_sword/little_sword.tscn" id="3_sglur"]
+[ext_resource type="PackedScene" uid="uid://x7robkhmkv22" path="res://items/artifacts/magisyanik_hand/magisyanik_hand.tscn" id="5_fkugw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abrql"]
 size = Vector2(20, 51)
@@ -14,7 +16,7 @@ script = ExtResource("1_abrql")
 unique_name_in_owner = true
 texture_filter = 3
 position = Vector2(0, 3.9999998)
-texture = ExtResource("1_symyc")
+texture = ExtResource("2_bls4j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1352557826]
 position = Vector2(0, 10.5)
@@ -23,8 +25,20 @@ shape = SubResource("RectangleShape2D_abrql")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=109021886]
 process_callback = 0
 
+[node name="ArmorSlot" type="Node2D" parent="." unique_id=1593787647]
+unique_name_in_owner = true
+
+[node name="SuperCostume" parent="ArmorSlot" unique_id=865392598 instance=ExtResource("3_fkugw")]
+position = Vector2(0, 24)
+
 [node name="WeaponSlot" type="Node2D" parent="." unique_id=1321964726]
 unique_name_in_owner = true
 position = Vector2(9, 23)
 
 [node name="LittleSword" parent="WeaponSlot" unique_id=343276945 instance=ExtResource("3_sglur")]
+
+[node name="AmuletSlot" type="Node2D" parent="." unique_id=1060216806]
+unique_name_in_owner = true
+
+[node name="MagisyanikHand" parent="AmuletSlot" unique_id=969402363 instance=ExtResource("5_fkugw")]
+position = Vector2(-18, 9)

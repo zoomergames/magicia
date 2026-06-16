@@ -23,6 +23,12 @@ size = Vector2(31.5, 97.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ca1mq"]
 size = Vector2(511, 117.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wox4"]
+size = Vector2(159.09094, 30.90909)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2rvx6"]
+size = Vector2(158.22723, 66.02272)
+
 [node name="StartLocation" type="Node2D" unique_id=316033101]
 
 [node name="Parallax2D" type="Parallax2D" parent="." unique_id=913431267]
@@ -138,3 +144,31 @@ stretch_mode = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor3" unique_id=1318620170]
 position = Vector2(246, 81.25)
 shape = SubResource("RectangleShape2D_ca1mq")
+
+[node name="Floor4" type="StaticBody2D" parent="WorldScale" unique_id=596236064]
+
+[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor4" unique_id=175444307]
+offset_left = 555.4545
+offset_top = -27.272728
+offset_right = 715.45447
+offset_bottom = 4.727272
+texture = ExtResource("12_6m5yo")
+stretch_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor4" unique_id=382921378]
+position = Vector2(634.5455, -12.727274)
+shape = SubResource("RectangleShape2D_3wox4")
+
+[node name="Floor5" type="StaticBody2D" parent="WorldScale" unique_id=548722688]
+
+[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor5" unique_id=1328902436]
+offset_left = 555.4545
+offset_top = 5.454545
+offset_right = 714.5454
+offset_bottom = 70.0
+texture = ExtResource("13_3wox4")
+stretch_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor5" unique_id=730103330]
+position = Vector2(634.52277, 36.079544)
+shape = SubResource("RectangleShape2D_2rvx6")

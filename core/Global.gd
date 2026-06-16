@@ -5,16 +5,54 @@ signal chat_message_received
 var current_speaker: Node2D = null # Ссылка на того, кто СЕЙЧАС говорит с игроком
 
 var player_name: String = "Безымянный"; # ник по умолчанию
+var is_pointer_over_ui: bool = false
+var active_slot_index: int = 0
+
 var name_input_node: LineEdit = null
 var chat_node: RichTextLabel = null;
+
+
+
+# СЛОТЫ
+var tooltip_node: PanelContainer = null
+# Инвентарь из 7 ячеек (0-4: предметы, 5: амулет, 6: броня)
+var inventory: Array = [null, null, null, null, null, null, null]
+
+func add_item_to_first_free_slot(item_data: Resource) -> bool:
+	for i in range(7):  # теперь все 7
+		if inventory[i] == null:
+			inventory[i] = item_data
+			log_to_chat("[Инвентарь] Предмет добавлен в слот № %s" % i)
+			return true
+	log_to_chat("[Инвентарь] Нет места в карманах!")
+	(get_tree().get_first_node_in_group("inventory_ui") as Node).update_all_slots()
+	return false
+
+func add_item(item_data: Resource) -> void:
+	for i: int in range(5):
+		if inventory[i] == null:
+			inventory[i] = item_data
+			print("[Инвентарь] Предмет добавлен в ячейку ", i)
+			return
+	print("[Инвентарь] Карманы полные!")
+
+
 var is_dialogue_active: bool = false
 var dialogue_step: int = 0
 
 var hearts_container_node: HBoxContainer = null
 
 func update_hearts_display() -> void:
+	# Пытаемся найти контейнер, если его нет
 	if hearts_container_node == null:
-		print("[HUD] ОШИБКА: Global не видит контейнер сердец! Он равен null!")
+		var hud = get_tree().get_first_node_in_group("hud")
+		if hud and hud.has_node("HeartsContainer"):
+			hearts_container_node = hud.get_node("HeartsContainer")
+		else:
+			# Если всё равно не нашли — просто выходим без ошибки
+			return
+	
+	if hearts_container_node == null:
 		return
 	
 	for child in hearts_container_node.get_children():
@@ -39,7 +77,6 @@ func update_hearts_display() -> void:
 		else:
 			heart_rect.texture = load("res://ui/health_bar/dead_heart.png")
 		hearts_container_node.add_child(heart_rect)
-
 func log_to_chat(message: String) -> void: # логика игровой панели чата
 	if chat_node != null:
 		chat_node.append_text(message + "\n")

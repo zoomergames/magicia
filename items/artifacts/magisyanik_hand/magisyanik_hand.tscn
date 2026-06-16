@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://x7robkhmkv22"]
+
+[ext_resource type="Texture2D" uid="uid://dqyec4k2cikyb" path="res://items/artifacts/magisyanik_hand/magisyanik_hand.png" id="1_r75gf"]
+
+[node name="MagisyanikHand" type="Node2D" unique_id=969402363]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2099284108]
+texture = ExtResource("1_r75gf")

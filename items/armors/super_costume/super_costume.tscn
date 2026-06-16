@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://smefc3j1vjsl"]
+
+[ext_resource type="Texture2D" uid="uid://cig0eyktfes27" path="res://items/armors/super_costume/super_costume.png" id="1_v801c"]
+
+[node name="SuperCostume" type="Node2D" unique_id=865392598]
+
+[node name="SuperCostumeSprite" type="Sprite2D" parent="." unique_id=904393499]
+texture = ExtResource("1_v801c")

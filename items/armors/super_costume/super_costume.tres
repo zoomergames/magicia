@@ -1,0 +1,11 @@
+[gd_resource type="Resource" format=3 uid="uid://c0cvtnqxoscwp"]
+
+[ext_resource type="Texture2D" uid="uid://cig0eyktfes27" path="res://items/armors/super_costume/super_costume.png" id="1_e7fwl"]
+[ext_resource type="PackedScene" uid="uid://smefc3j1vjsl" path="res://items/armors/super_costume/super_costume.tscn" id="2_cuh1r"]
+[ext_resource type="Script" uid="uid://b76283ddn60jg" path="res://items/armors/super_costume/super_costume_data.gd" id="3_e7fwl"]
+
+[resource]
+script = ExtResource("3_e7fwl")
+icon = ExtResource("1_e7fwl")
+scene = ExtResource("2_cuh1r")
+metadata/_custom_type_script = "uid://b7pftcglyjq40"

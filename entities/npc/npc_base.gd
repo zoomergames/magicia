@@ -28,7 +28,7 @@ func _create_hover_label():
 	name_label.visible = false # по умолчанию имя npc скрыто
 	add_child(name_label)
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if name_label and name_label.visible:
 		var text_width = name_label.size.x
 		name_label.position.x = sprite.position.x - (text_width / 2.0)
@@ -56,7 +56,6 @@ func start_npc_dialogue() -> void:
 	pass
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Если диалог идет, и текущий спикер — это Я
 	if Global.is_dialogue_active and Global.current_speaker == self:
 		if dialogue_controller and dialogue_controller.has_method("handle_input"):
 			dialogue_controller.handle_input(event)

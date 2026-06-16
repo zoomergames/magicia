@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://buriqo0q83ytq"]
+
+[ext_resource type="Script" uid="uid://cgpsenutvb78i" path="res://ui/tooltip/tooltip.gd" id="1_1uxe3"]
+[ext_resource type="FontFile" uid="uid://ymuoahxdj2bh" path="res://ui/font/VCR OSD Mono Nova/VCROSDMonoNova.ttf" id="2_oh852"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1uxe3"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.26399374, 0.0004372438, 0.383296, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[node name="Tooltip" type="PanelContainer" unique_id=1354817757]
+theme_override_styles/panel = SubResource("StyleBoxFlat_1uxe3")
+script = ExtResource("1_1uxe3")
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="." unique_id=2000094926]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 180)
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_oh852")
+theme_override_fonts/bold_font = ExtResource("2_oh852")
+theme_override_fonts/bold_italics_font = ExtResource("2_oh852")
+theme_override_fonts/italics_font = ExtResource("2_oh852")
+theme_override_fonts/mono_font = ExtResource("2_oh852")
+theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/bold_font_size = 10
+theme_override_font_sizes/bold_italics_font_size = 10
+theme_override_font_sizes/italics_font_size = 10
+theme_override_font_sizes/mono_font_size = 10
+bbcode_enabled = true
+fit_content = true

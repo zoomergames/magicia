@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://ll3xyb1moxi5" path="res://ui/chat/chat_ui.tscn" id="4_a04qp"]
 [ext_resource type="PackedScene" uid="uid://d3n0u7k42ctb1" path="res://entities/npc/kappa/kappa.tscn" id="4_cjuek"]
 [ext_resource type="PackedScene" uid="uid://cwgbxxr7nq4p1" path="res://ui/health_bar/health_bar.tscn" id="5_sjcnv"]
+[ext_resource type="PackedScene" uid="uid://cn44yi5cfohmw" path="res://ui/inventory/inventory_bar.tscn" id="7_vhpdd"]
+[ext_resource type="PackedScene" uid="uid://buriqo0q83ytq" path="res://ui/tooltip/tooltip.tscn" id="8_gjr3k"]
 
 [node name="Node" type="Node" unique_id=1864193894]
 
@@ -13,14 +15,20 @@
 position = Vector2(203, 369)
 
 [node name="Player" parent="." unique_id=152261700 instance=ExtResource("2_5sg27")]
-position = Vector2(279, 164)
+position = Vector2(524, 122)
 
 [node name="Emilia" parent="." unique_id=847629978 instance=ExtResource("3_8xnxh")]
 position = Vector2(440, 235)
 
 [node name="Kappa" parent="." unique_id=1534572424 instance=ExtResource("4_cjuek")]
-position = Vector2(641, 336)
+position = Vector2(896, 315)
 
 [node name="ChatUI" parent="." unique_id=1377273628 instance=ExtResource("4_a04qp")]
 
 [node name="HUD" parent="." unique_id=1667204069 instance=ExtResource("5_sjcnv")]
+
+[node name="InventoryUI" parent="." unique_id=150171140 instance=ExtResource("7_vhpdd")]
+
+[node name="Tooltip" parent="InventoryUI" unique_id=1354817757 instance=ExtResource("8_gjr3k")]
+offset_right = 13.0
+offset_bottom = 12.0

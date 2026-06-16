@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://che7qpd4g3q5p"]
+
+[ext_resource type="Texture2D" uid="uid://bncsyrmiqt131" path="res://entities/player/weapons/little_sword/small_sword.png" id="1_11y6t"]
+[ext_resource type="Script" uid="uid://b7pftcglyjq40" path="res://entities/player/weapons/little_sword/little_sword_data.gd" id="1_u8led"]
+[ext_resource type="PackedScene" uid="uid://dinyql5tr8f2c" path="res://entities/player/weapons/little_sword/little_sword.tscn" id="2_egvjb"]
+
+[resource]
+script = ExtResource("1_u8led")
+icon = ExtResource("1_11y6t")
+scene = ExtResource("2_egvjb")
+metadata/_custom_type_script = "uid://b7pftcglyjq40"
