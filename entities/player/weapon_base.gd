@@ -12,13 +12,15 @@ var weapon_data: ItemData
 var is_recharging: bool = false
 
 func _ready() -> void:
+	if weapon_data:
+		_update_weapon_stats()
+		return
+		
 	var weapon_folder_name = name.to_snake_case()
 	var resource_path = "res://entities/player/weapons/" + weapon_folder_name + "/" + weapon_folder_name + ".tres"
 	if ResourceLoader.exists(resource_path):
 		weapon_data = load(resource_path)
 		_update_weapon_stats()
-	else:
-		printerr("Авто-поиск: не нашёл .tres файл по пути: ", resource_path)
 
 # ФУНКЦИЯ НАХОЖДЕНИЯ РЕСУРС-ФАЙЛА
 func _update_weapon_stats() -> void:

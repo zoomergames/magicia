@@ -4,6 +4,7 @@ extends DialogueManager
 # Переопределяем функцию шага, которую вызывает наш DialogueManager
 func run_dialogue_step() -> void:
 	if dialogue_step == 1:
+		Global.log_to_chat("[b][color=gray][Система] Нажмите Enter для продолжения диалога [/color][/b]")
 		Global.log_to_chat("%s [b][color=white]Приветствую Вас, Герой![/color][/b]" % prefix)
 	elif dialogue_step == 2:
 		Global.log_to_chat("%s [b][color=white]Как мне Вас величать?[/color][/b]" % prefix)

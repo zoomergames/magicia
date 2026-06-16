@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dwcryvtjvl8xm"]
+[gd_scene format=4 uid="uid://dwcryvtjvl8xm"]
 
 [ext_resource type="Texture2D" uid="uid://bfrdk5a5ib2xd" path="res://world/assets/backgrounds/Desert/background1.png" id="1_5577o"]
 [ext_resource type="Texture2D" uid="uid://boy21eogunn7x" path="res://world/assets/backgrounds/Desert/background2.png" id="2_3wox4"]
@@ -13,21 +13,32 @@
 [ext_resource type="Texture2D" uid="uid://df4x1u3sfjcjk" path="res://world/assets/backgrounds/Desert/cloud8.png" id="11_lyqp8"]
 [ext_resource type="Texture2D" uid="uid://d00n1pk5gnv0q" path="res://world/assets/tiles/castle/brick_castle4.png" id="12_6m5yo"]
 [ext_resource type="Texture2D" uid="uid://drkqlpdd1ex4" path="res://world/assets/tiles/castle/brick_castle.png" id="13_3wox4"]
+[ext_resource type="Texture2D" uid="uid://dvafvd5veptff" path="res://world/assets/tiles/castle/brick_castle3.png" id="14_2rvx6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7sjy"]
-size = Vector2(512, 32)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wnybq"]
+texture = ExtResource("12_6m5yo")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vr8db"]
-size = Vector2(31.5, 97.5)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_n1k0c"]
+texture = ExtResource("13_3wox4")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ca1mq"]
-size = Vector2(511, 117.5)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qf2k5"]
+texture = ExtResource("14_2rvx6")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wox4"]
-size = Vector2(159.09094, 30.90909)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2rvx6"]
-size = Vector2(158.22723, 66.02272)
+[sub_resource type="TileSet" id="TileSet_3wox4"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+physics_layer_1/collision_layer = 0
+physics_layer_1/collision_mask = 0
+sources/0 = SubResource("TileSetAtlasSource_wnybq")
+sources/1 = SubResource("TileSetAtlasSource_n1k0c")
+sources/2 = SubResource("TileSetAtlasSource_qf2k5")
 
 [node name="StartLocation" type="Node2D" unique_id=316033101]
 
@@ -103,72 +114,6 @@ offset = Vector2(-320, 0)
 [node name="WorldScale" type="Node2D" parent="." unique_id=283548112]
 scale = Vector2(1.1, 1.1)
 
-[node name="Floor" type="StaticBody2D" parent="WorldScale" unique_id=857434285]
-
-[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor" unique_id=240832898]
-offset_left = -10.0
-offset_top = -10.0
-offset_right = 502.0
-offset_bottom = 22.0
-texture = ExtResource("12_6m5yo")
-stretch_mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor" unique_id=1683320310]
-position = Vector2(246, 6)
-shape = SubResource("RectangleShape2D_u7sjy")
-
-[node name="Floor2" type="StaticBody2D" parent="WorldScale" unique_id=419611764]
-
-[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor2" unique_id=2032812956]
-offset_left = 276.0
-offset_top = -157.0
-offset_right = 308.0
-offset_bottom = -59.0
-texture = ExtResource("12_6m5yo")
-stretch_mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor2" unique_id=768398738]
-position = Vector2(292, -108.25)
-shape = SubResource("RectangleShape2D_vr8db")
-
-[node name="Floor3" type="StaticBody2D" parent="WorldScale" unique_id=629982509]
-
-[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor3" unique_id=1865689997]
-offset_left = -10.0
-offset_top = 22.0
-offset_right = 502.0
-offset_bottom = 140.0
-texture = ExtResource("13_3wox4")
-stretch_mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor3" unique_id=1318620170]
-position = Vector2(246, 81.25)
-shape = SubResource("RectangleShape2D_ca1mq")
-
-[node name="Floor4" type="StaticBody2D" parent="WorldScale" unique_id=596236064]
-
-[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor4" unique_id=175444307]
-offset_left = 555.4545
-offset_top = -27.272728
-offset_right = 715.45447
-offset_bottom = 4.727272
-texture = ExtResource("12_6m5yo")
-stretch_mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor4" unique_id=382921378]
-position = Vector2(634.5455, -12.727274)
-shape = SubResource("RectangleShape2D_3wox4")
-
-[node name="Floor5" type="StaticBody2D" parent="WorldScale" unique_id=548722688]
-
-[node name="TextureRect" type="TextureRect" parent="WorldScale/Floor5" unique_id=1328902436]
-offset_left = 555.4545
-offset_top = 5.454545
-offset_right = 714.5454
-offset_bottom = 70.0
-texture = ExtResource("13_3wox4")
-stretch_mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldScale/Floor5" unique_id=730103330]
-position = Vector2(634.52277, 36.079544)
-shape = SubResource("RectangleShape2D_2rvx6")
+[node name="TileMapLayer" type="TileMapLayer" parent="WorldScale" unique_id=56017563]
+tile_map_data = PackedByteArray("AAAYAAAAAAAAAAAAAAAZAAAAAAAAAAAAAAAaAAAAAAAAAAAAAAAbAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAYAAEAAQAAAAAAAAAZAAEAAQAAAAAAAAAaAAEAAQAAAAAAAAAbAAEAAQAAAAAAAAAcAAEAAQAAAAAAAAAYAAIAAQAAAAAAAAAZAAIAAQAAAAAAAAAaAAIAAQAAAAAAAAAbAAIAAQAAAAAAAAAcAAIAAQAAAAAAAAAYAP3/AAAAAAAAAAAYAPz/AAAAAAAAAAAZAPz/AAAAAAAAAAAZAPv/AAAAAAAAAAAaAPv/AAAAAAAAAAAbAPv/AAAAAAAAAAAbAPz/AAAAAAAAAAAcAPz/AAAAAAAAAAAcAP3/AAAAAAAAAAAcAP7/AAAAAAAAAAAcAP//AAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAD//wEAAQAAAAAAAAAAAAEAAQAAAAAAAAABAAEAAQAAAAAAAAACAAEAAQAAAAAAAAADAAEAAQAAAAAAAAAEAAEAAQAAAAAAAAAFAAEAAQAAAAAAAAAGAAEAAQAAAAAAAAAHAAEAAQAAAAAAAAAIAAEAAQAAAAAAAAAJAAEAAQAAAAAAAAAKAAEAAQAAAAAAAAALAAEAAQAAAAAAAAAMAAEAAQAAAAAAAAANAAEAAQAAAAAAAAAOAAEAAQAAAAAAAAAOAAIAAQAAAAAAAAANAAIAAQAAAAAAAAAMAAIAAQAAAAAAAAALAAIAAQAAAAAAAAAKAAIAAQAAAAAAAAAJAAIAAQAAAAAAAAAIAAIAAQAAAAAAAAAHAAIAAQAAAAAAAAAGAAIAAQAAAAAAAAAFAAIAAQAAAAAAAAAEAAIAAQAAAAAAAAADAAIAAQAAAAAAAAACAAIAAQAAAAAAAAABAAIAAQAAAAAAAAAAAAIAAQAAAAAAAAD//wIAAQAAAAAAAAD//wMAAQAAAAAAAAAAAAMAAQAAAAAAAAABAAMAAQAAAAAAAAACAAMAAQAAAAAAAAADAAMAAQAAAAAAAAAEAAMAAQAAAAAAAAAFAAMAAQAAAAAAAAAGAAMAAQAAAAAAAAAHAAMAAQAAAAAAAAAIAAMAAQAAAAAAAAAJAAMAAQAAAAAAAAAKAAMAAQAAAAAAAAALAAMAAQAAAAAAAAAMAAMAAQAAAAAAAAANAAMAAQAAAAAAAAAOAAMAAQAAAAAAAAAJAP3/AAAAAAAAAAAJAPz/AAAAAAAAAAAJAPv/AAAAAAAAAAARAP//AAAAAAAAAAASAP//AAAAAAAAAAATAP//AAAAAAAAAAAUAP//AAAAAAAAAAAVAP//AAAAAAAAAAARAAAAAQAAAAAAAAASAAAAAQAAAAAAAAATAAAAAQAAAAAAAAAUAAAAAQAAAAAAAAAVAAAAAQAAAAAAAAAVAAEAAQAAAAAAAAAUAAEAAQAAAAAAAAATAAEAAQAAAAAAAAASAAEAAQAAAAAAAAARAAEAAQAAAAAAAAARAAIAAQAAAAAAAAASAAIAAQAAAAAAAAATAAIAAQAAAAAAAAAUAAIAAQAAAAAAAAAVAAIAAQAAAAAAAAAYAAMAAQAAAAAAAAAZAAMAAQAAAAAAAAAaAAMAAQAAAAAAAAAbAAMAAQAAAAAAAAAcAAMAAQAAAAAAAAAbAP//AgAAAAAAAAAbAP7/AgAAAAAAAAAbAP3/AgAAAAAAAAAaAP3/AgAAAAAAAAAaAPz/AgAAAAAAAAAaAP7/AgAAAAAAAAAaAP//AgAAAAAAAAAZAP//AgAAAAAAAAAYAP//AgAAAAAAAAAYAP7/AgAAAAAAAAAZAP7/AgAAAAAAAAAZAP3/AgAAAAAAAAA=")
+tile_set = SubResource("TileSet_3wox4")

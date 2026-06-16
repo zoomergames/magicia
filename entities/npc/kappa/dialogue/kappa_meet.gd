@@ -2,7 +2,7 @@ extends DialogueManager
 
 func run_dialogue_step() -> void:
 	if dialogue_step == 1:
-		Global.log_to_chat("[color=gray]На Вас пристально пялится Каппа[/color]")
+		Global.log_to_chat("[color=gray]На Вас пристально пялится %s[/color]" % prefix)
 	elif dialogue_step == 2:
 		Global.log_to_chat("%s [b][color=white]О! Здарова, [i][color=orange]%s[/color][/i]![/color][/b]" % [prefix, Global.player_name])	
 	elif dialogue_step == 3:

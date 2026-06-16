@@ -26,7 +26,7 @@ func _ready() -> void:
 	if enemy_data:
 		# Вытаскиваем характеристики из файла-ресурса
 		max_hp = enemy_data.max_hp
-		speed = enemy_data.speed
+		speed = enemy_data.speed + randf_range(-15.0, 15.0)
 		display_name = enemy_data.enemy_name # Присваиваем имя из ресурса самой ноде
 	else:
 		# На всякий случай ставим стандартные статы, если забыли прикрепить ресурс

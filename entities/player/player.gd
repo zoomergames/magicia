@@ -165,6 +165,9 @@ func change_hand_weapon() -> void:
 	var item_data = Global.inventory[Global.active_slot_index]
 	if item_data and item_data.scene:
 		var instance = item_data.scene.instantiate()
+		
+		if "weapon_data" in instance:
+			instance.weapon_data = item_data
 		weapon_slot.add_child(instance)
 
 
