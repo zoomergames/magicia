@@ -130,7 +130,7 @@ func _physics_process(delta: float) -> void:
 		$AmuletSlot.scale.x = 1.0
 		weapon_slot.scale.x = 1.0
 		
-	if !(is_frozen or is_dead) and Input.is_action_just_pressed("attack") and not Global.is_pointer_over_ui:
+	if !(is_frozen or is_dead) and Input.is_action_just_pressed("attack") and get_viewport().gui_get_hovered_control() == null:
 		if weapon_slot.get_child_count() > 0:
 			var current_weapon = weapon_slot.get_child(0)
 			current_weapon.try_attack()
@@ -139,19 +139,19 @@ func _physics_process(delta: float) -> void:
 	die_in_abyss()
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("1"):
+	if Input.is_action_just_pressed("slot_1"):
 		Global.active_slot_index = 0
 		change_hand_weapon()
-	if Input.is_action_just_pressed("2"):
+	if Input.is_action_just_pressed("slot_2"):
 		Global.active_slot_index = 1
 		change_hand_weapon()
-	if Input.is_action_just_pressed("3"):
+	if Input.is_action_just_pressed("slot_3"):
 		Global.active_slot_index = 2
 		change_hand_weapon()
-	if Input.is_action_just_pressed("4"):
+	if Input.is_action_just_pressed("slot_4"):
 		Global.active_slot_index = 3
 		change_hand_weapon()
-	if Input.is_action_just_pressed("5"):
+	if Input.is_action_just_pressed("slot_5"):
 		Global.active_slot_index = 4
 		change_hand_weapon()
 
@@ -178,3 +178,38 @@ func check_magic_hearts_activation() -> void:
 			return
 	max_magic_hp = 0
 	Global.update_hearts_display()
+	
+	
+# Внутри player.gd
+
+func _process(_delta: float) -> void:
+	# 1. ОБРАБОТКА НАЖАТИЯ ЦИФР 1-7
+	if Input.is_action_just_pressed("slot_1"): _change_active_slot(0)
+	elif Input.is_action_just_pressed("slot_2"): _change_active_slot(1)
+	elif Input.is_action_just_pressed("slot_3"): _change_active_slot(2)
+	elif Input.is_action_just_pressed("slot_4"): _change_active_slot(3)
+	elif Input.is_action_just_pressed("slot_5"): _change_active_slot(4)
+	elif Input.is_action_just_pressed("slot_6"): _change_active_slot(5)
+	elif Input.is_action_just_pressed("slot_7"): _change_active_slot(6)
+
+	# 2. ОБРАБОТКА ПРОКРУТКИ КОЛЁСИКА
+	if Input.is_action_just_pressed("next_slot"):
+		var new_slot = Global.active_slot_index + 1
+		if new_slot > 4: new_slot = 0
+		_change_active_slot(new_slot)
+		
+	elif Input.is_action_just_pressed("prev_slot"):
+		var new_slot = Global.active_slot_index - 1
+		if new_slot < 0: new_slot = 4
+		_change_active_slot(new_slot)
+
+# Вспомогательная функция для применения выбора
+func _change_active_slot(index: int) -> void:
+	Global.active_slot_index = index
+	
+	# Просим инвентарь перерисовать рамки (вызываем метод из нашего inventory_ui)
+	get_tree().call_group("inventory_ui", "update_all_slots")
+	
+	# Сами обновляем оружие в руках у игрока
+	if has_method("change_hand_weapon"):
+		change_hand_weapon()

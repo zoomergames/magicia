@@ -2,18 +2,23 @@
 
 [ext_resource type="Script" uid="uid://dglkdu2a4a4vp" path="res://ui/inventory/inventory_ui.gd" id="1_qfc0o"]
 [ext_resource type="Texture2D" uid="uid://b107fnppim150" path="res://ui/inventory/slot.png" id="2_rpdgq"]
+[ext_resource type="Texture2D" uid="uid://c6hw6j3kyvry4" path="res://ui/inventory/hover_slot.png" id="3_470qb"]
+[ext_resource type="Texture2D" uid="uid://baniry21jat8e" path="res://ui/inventory/active_slot.png" id="4_f0pwd"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l1vw4"]
 texture = ExtResource("2_rpdgq")
 
 [node name="InventoryUI" type="CanvasLayer" unique_id=150171140]
 script = ExtResource("1_qfc0o")
+normal_slot_texture = ExtResource("2_rpdgq")
+hover_slot_texture = ExtResource("3_470qb")
+active_slot_texture = ExtResource("4_f0pwd")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1136047839]
 offset_left = 10.0
 offset_top = 50.0
 offset_right = 42.0
-offset_bottom = 298.0
+offset_bottom = 361.0
 
 [node name="Slot0" type="Button" parent="VBoxContainer" unique_id=810079887]
 custom_minimum_size = Vector2(32, 32)
@@ -59,15 +64,22 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_l1vw4")
 
 [connection signal="mouse_entered" from="VBoxContainer/Slot0" to="." method="_on_slot_0_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Slot0" to="." method="_on_slot_0_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Slot0" to="." method="_on_slot_0_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Slot1" to="." method="_on_slot_1_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Slot1" to="." method="_on_slot_1_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Slot1" to="." method="_on_slot_1_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Slot2" to="." method="_on_slot_2_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Slot2" to="." method="_on_slot_2_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Slot2" to="." method="_on_slot_2_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Slot3" to="." method="_on_slot_3_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Slot3" to="." method="_on_slot_3_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Slot3" to="." method="_on_slot_3_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Slot4" to="." method="_on_slot_4_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Slot4" to="." method="_on_slot_4_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Slot4" to="." method="_on_slot_4_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Slot5" to="." method="_on_slot_5_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Slot5" to="." method="_on_slot_5_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Slot5" to="." method="_on_slot_5_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/Slot6" to="." method="_on_slot_6_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Slot6" to="." method="_on_slot_6_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/Slot6" to="." method="_on_slot_6_pressed"]
