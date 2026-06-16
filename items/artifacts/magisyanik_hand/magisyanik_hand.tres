@@ -1,6 +1,6 @@
 [gd_resource type="Resource" format=3 uid="uid://d2fehyyc3tak5"]
 
-[ext_resource type="Texture2D" uid="uid://dnk4igaf0inx2" path="res://entities/npc/magisyanik/magisyanik_hand.png" id="1_r5oc4"]
+[ext_resource type="Texture2D" uid="uid://dnk4igaf0inx2" path="res://entities/enemies/magisyanik/magisyanik_hand.png" id="1_r5oc4"]
 [ext_resource type="PackedScene" uid="uid://x7robkhmkv22" path="res://items/artifacts/magisyanik_hand/magisyanik_hand.tscn" id="2_mp8d6"]
 [ext_resource type="Script" uid="uid://jpscgy0xd36" path="res://items/artifacts/magisyanik_hand/magisyanik_hand_data.gd" id="3_r5oc4"]
 

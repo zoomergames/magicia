@@ -3,13 +3,12 @@
 [ext_resource type="Script" uid="uid://belynuc1i5v3l" path="res://entities/player/player.gd" id="1_abrql"]
 [ext_resource type="Texture2D" uid="uid://bjgeuv3a2nrk3" path="res://entities/player/player_template.png" id="2_bls4j"]
 [ext_resource type="PackedScene" uid="uid://smefc3j1vjsl" path="res://items/armors/super_costume/super_costume.tscn" id="3_fkugw"]
-[ext_resource type="PackedScene" uid="uid://dinyql5tr8f2c" path="res://entities/player/weapons/little_sword/little_sword.tscn" id="3_sglur"]
-[ext_resource type="PackedScene" uid="uid://x7robkhmkv22" path="res://items/artifacts/magisyanik_hand/magisyanik_hand.tscn" id="5_fkugw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abrql"]
 size = Vector2(20, 51)
 
 [node name="Player" type="CharacterBody2D" unique_id=152261700]
+collision_layer = 2
 script = ExtResource("1_abrql")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=857229445]
@@ -31,14 +30,9 @@ unique_name_in_owner = true
 [node name="SuperCostume" parent="ArmorSlot" unique_id=865392598 instance=ExtResource("3_fkugw")]
 position = Vector2(0, 24)
 
-[node name="WeaponSlot" type="Node2D" parent="." unique_id=1321964726]
-unique_name_in_owner = true
-position = Vector2(9, 23)
-
-[node name="LittleSword" parent="WeaponSlot" unique_id=343276945 instance=ExtResource("3_sglur")]
-
 [node name="AmuletSlot" type="Node2D" parent="." unique_id=1060216806]
 unique_name_in_owner = true
 
-[node name="MagisyanikHand" parent="AmuletSlot" unique_id=969402363 instance=ExtResource("5_fkugw")]
-position = Vector2(-18, 9)
+[node name="WeaponSlot" type="Node2D" parent="." unique_id=1321964726]
+unique_name_in_owner = true
+position = Vector2(9, 23)

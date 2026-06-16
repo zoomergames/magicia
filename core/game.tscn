@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cwgbxxr7nq4p1" path="res://ui/health_bar/health_bar.tscn" id="5_sjcnv"]
 [ext_resource type="PackedScene" uid="uid://cn44yi5cfohmw" path="res://ui/inventory/inventory_bar.tscn" id="7_vhpdd"]
 [ext_resource type="PackedScene" uid="uid://buriqo0q83ytq" path="res://ui/tooltip/tooltip.tscn" id="8_gjr3k"]
+[ext_resource type="PackedScene" uid="uid://dftaaw8crcpf" path="res://entities/enemies/magisyanik/magisyanik.tscn" id="9_4cdhi"]
 
 [node name="Node" type="Node" unique_id=1864193894]
 
@@ -32,3 +33,12 @@ position = Vector2(896, 315)
 [node name="Tooltip" parent="InventoryUI" unique_id=1354817757 instance=ExtResource("8_gjr3k")]
 offset_right = 13.0
 offset_bottom = 12.0
+
+[node name="Magisyanik" parent="." unique_id=190714769 instance=ExtResource("9_4cdhi")]
+position = Vector2(688, 317)
+
+[node name="Magisyanik2" parent="." unique_id=1580185411 instance=ExtResource("9_4cdhi")]
+position = Vector2(284, -597)
+
+[node name="Magisyanik3" parent="." unique_id=2004420853 instance=ExtResource("9_4cdhi")]
+position = Vector2(321, -235)

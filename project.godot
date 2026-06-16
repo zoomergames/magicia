@@ -81,6 +81,14 @@ attack={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Окружение (стены, земля)"
+2d_physics/layer_2="Игрок"
+2d_physics/layer_3="Враги"
+2d_physics/layer_4="Хитбокс Игрока"
+2d_physics/layer_5="Хитбокс Врагов"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"

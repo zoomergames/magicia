@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c2rr40xtomat1"]
+
+[ext_resource type="Script" uid="uid://dh4lc3ct31d33" path="res://entities/enemies/enemy_data.gd" id="1_ce0xc"]
+
+[resource]
+script = ExtResource("1_ce0xc")
+enemy_name = "Маджисяник"
+metadata/_custom_type_script = "uid://dh4lc3ct31d33"
