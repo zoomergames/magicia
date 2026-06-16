@@ -4,6 +4,10 @@ class_name EnemyBase
 @export var enemy_data: EnemyData
 @export var sprite: Sprite2D
 
+@export var detection_range: float = 300.0
+@export var jump_force: float = -300.0
+@export var jump_chance: float = 0.01
+
 var max_hp: int
 var speed: float
 var display_name: String = ""
@@ -47,23 +51,42 @@ func die(was_in_abyss: bool):
 	queue_free()
 	
 func _process(_delta: float) -> void:
-	var player:CharacterBody2D = get_tree().get_first_node_in_group("player")
-	if player:
-		if player.global_position.x < global_position.x:
-			sprite.flip_h = true
-		else:
-			sprite.flip_h = false
+	var player = get_tree().get_first_node_in_group("player")
+	# Проверяем, существует ли игрок и ЖИВ ли он
+	if player and not player.get("is_dead"):
+		var distance = global_position.distance_to(player.global_position)
+		# Поворачиваем спрайт ТОЛЬКО если игрок в зоне видимости
+		if distance <= detection_range:
+			if player.global_position.x < global_position.x:
+				sprite.flip_h = true
+			else:
+				sprite.flip_h = false
 
 func _physics_process(delta: float) -> void:
 	die_in_abyss()
-	# Гравитация
+	
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	# Преследование игрока
+		
 	var player = get_tree().get_first_node_in_group("player")
-	if player:
-		if player.global_position.x < global_position.x:
-			velocity.x = -speed
+	
+	# Проверяем: есть игрок и он НЕ мертв
+	if player and not player.get("is_dead"):
+		var distance = global_position.distance_to(player.global_position)
+		
+		if distance <= detection_range:
+			if player.global_position.x < global_position.x:
+				velocity.x = -speed
+			else:
+				velocity.x = speed
+				
+			if is_on_floor() and randf() < jump_chance:
+				velocity.y = jump_force
 		else:
-			velocity.x = speed
+			# Если игрок жив, но ушел далеко — останавливаемся
+			velocity.x = 0
+	else:
+		# Если игрок умер или его нет на сцене — останавливаемся
+		velocity.x = 0
+		
 	move_and_slide()
