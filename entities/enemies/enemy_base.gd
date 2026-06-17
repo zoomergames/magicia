@@ -1,6 +1,7 @@
 extends CharacterBody2D
 class_name EnemyBase
 
+# БАЗОВЫЕ НАСТРОЙКИ
 @export var enemy_data: EnemyData
 @export var sprite: Sprite2D
 
@@ -29,6 +30,9 @@ var max_hp: int
 var current_hp: int
 var is_dead: bool = false
 
+# АТАКА
+var damage: int
+
 # ФИЗИКА
 var speed: float
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -45,11 +49,13 @@ func _ready() -> void:
 		max_hp = enemy_data.max_hp
 		speed = enemy_data.speed + randf_range(-15.0, 15.0)
 		display_name = enemy_data.enemy_name # Присваиваем имя из ресурса самой ноде
+		damage = enemy_data.damage
 	else:
 		# На всякий случай ставим стандартные статы, если забыли прикрепить ресурс
 		max_hp = 50
 		speed = 50.0
 		printerr("Забыли прикрепить файл-ресурс .tres в инспекторе у врага: ", name)
+		damage = 100
 		
 	# Только ПОСЛЕ того, как max_hp заполнился, приравниваем текущее здоровье
 	current_hp = max_hp
@@ -205,7 +211,15 @@ func _physics_process(delta: float) -> void:
 			
 		# Прибавляем силу отскока к скорости ходьбы живого врага
 		velocity.x += knockback_velocity.x
-
+	
+	
+	# заряжаем зону атаки врага его текущим уроном из ресурса
+	if has_node("HurtBox"):
+		$HurtBox.set_meta("attack_power", damage)
+	elif has_node("Hurtbox"):
+		$Hurtbox.set_meta("attack_power", damage)
+	
+	
 	move_and_slide()
 
 

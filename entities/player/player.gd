@@ -1,17 +1,26 @@
 extends CharacterBody2D
 
+# СПАВН-ПОИНТ
 var spawn_point: Vector2
 
+# СОСТОЯНИЯ
 var is_frozen: bool = false
 var is_dead: bool = false
+var has_amulet: bool = false
 
+# ФИЗИКА
 var speed: int = 200
 var jump_velocity: int = -400
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
 
+# ЗДОРОВЬЕ
 var current_hp: int = 30
 var max_base_hp: int = 100
+
+var current_magic_hp: int = 0
 var max_magic_hp: int = 100
+
+var invulnerability_timer: float = 0.0
 
 @onready var sprite = %Sprite2D
 @onready var weapon_slot = %WeaponSlot
@@ -97,6 +106,8 @@ func die_in_abyss():
 		check_magic_hearts_activation()
 
 func _physics_process(delta: float) -> void:
+	if invulnerability_timer > 0.0:
+		invulnerability_timer -= delta
 	var direction = Input.get_axis("move_left", "move_right")
 	
 	if is_frozen or is_dead:
@@ -134,6 +145,29 @@ func _physics_process(delta: float) -> void:
 		if weapon_slot.get_child_count() > 0:
 			var current_weapon = weapon_slot.get_child(0)
 			current_weapon.try_attack()
+			
+			
+	# атакуют игрока
+	if not is_dead and invulnerability_timer <= 0.0 and has_node("HitBox"):
+		# var enemy_areas: Array = %HitBox.get_overlapping_areas()
+		
+		var query = PhysicsShapeQueryParameters2D.new()
+		query.collide_with_areas = true
+		query.collide_with_bodies = false
+		query.shape = %HitBox.get_node("CollisionShape2D").shape
+		query.transform = %HitBox.global_transform
+		query.collision_mask = 32
+		
+		var intersections = get_world_2d().direct_space_state.intersect_shape(query)
+		for result in intersections:
+			var enemy_area = result.collider as Area2D
+			if enemy_area and enemy_area.has_meta("attack_power"):
+				print("[ОТЛАДКА ИГРОКА]: Нашёл метаданные урона врага! Вызываю take_damage.")
+				var damage_area = enemy_area.get_meta("attack_power")
+				take_damage(damage_area, enemy_area)
+				break
+			else:
+				print("[ОТЛАДКА ИГРОКА]: Ошибка! На зоне врага НЕТ метаданных 'attack_power'.")
 			
 	move_and_slide()
 	die_in_abyss()
@@ -182,8 +216,53 @@ func check_magic_hearts_activation() -> void:
 	max_magic_hp = 0
 	Global.update_hearts_display()
 	
+func take_damage(amount: int, enemy_area: Area2D):
+	if is_dead:
+		return
 	
-# Внутри player.gd
+	current_hp -= amount
+	invulnerability_timer = 0.5
+	print("[ИГРОК] Получил урон: ", amount, ". Осталось ХП: ", current_hp)
+	
+	Global.update_hearts_display()
+	if current_hp <= 0:
+		is_dead = true
+		current_hp = 0
+		_start_death_logic()
+		
+	if not is_dead:
+		if enemy_area.global_position.x < global_position.x:
+			velocity.x = 350.0
+		else:
+			velocity.x = -350.0
+		velocity.y = -150.0
+
+		
+	if amount:
+		sprite.modulate = Color(10, 1, 1) # Гипер-красный
+		get_tree().create_timer(0.15).timeout.connect(func(): sprite.modulate = Color(1, 1, 1))
+
+		
+func _start_death_logic() -> void:
+	visible = false
+	
+	Global.log_to_chat("[color=red]%s[/color] был аннигилирован монстрами!" % Global.player_name)
+	await get_tree().create_timer(1.0).timeout
+	Global.log_to_chat("[color=gray]возрождение через 3...[/color]")
+	await get_tree().create_timer(1.0).timeout
+	Global.log_to_chat("[color=gray]2...[/color]")
+	await get_tree().create_timer(1.0).timeout
+	Global.log_to_chat("[color=gray]1...[/color]")
+	await get_tree().create_timer(1.0).timeout
+	
+	global_position = spawn_point
+	velocity = Vector2.ZERO
+	visible = true
+	current_hp = 30 # Ваше стартовое ХП при респавне
+	is_dead = false
+	Global.update_hearts_display()
+	Global.log_to_chat("[color=green]Вы успешно возродились![/color]")
+	check_magic_hearts_activation()
 
 func _process(_delta: float) -> void:
 	# 1. ОБРАБОТКА НАЖАТИЯ ЦИФР 1-7
