@@ -5,4 +5,5 @@
 [resource]
 script = ExtResource("1_ce0xc")
 enemy_name = "Маджисяник"
+name_color = Color(0.23921569, 0.21568628, 1, 1)
 metadata/_custom_type_script = "uid://dh4lc3ct31d33"

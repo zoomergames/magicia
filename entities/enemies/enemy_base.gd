@@ -8,6 +8,9 @@ class_name EnemyBase
 @export var jump_force: float = -300.0
 @export var jump_chance: float = 0.01
 
+@export var label_offset_y: float = -40.0
+var name_label: Label = null
+
 var max_hp: int
 var speed: float
 var display_name: String = ""
@@ -37,6 +40,9 @@ func _ready() -> void:
 	# Только ПОСЛЕ того, как max_hp заполнился, приравниваем текущее здоровье
 	current_hp = max_hp
 	
+	input_pickable = true # наведение мышки включено
+	_create_hover_label()
+	
 func take_damage(amount: int) -> void:
 	current_hp -= amount
 	print("[УДАР] Враг ", name, " получил урон: ", amount, ". Осталось ХП: ", current_hp)
@@ -61,6 +67,11 @@ func _process(_delta: float) -> void:
 				sprite.flip_h = true
 			else:
 				sprite.flip_h = false
+				
+	if name_label and name_label.visible and sprite:
+		var text_width = name_label.size.x
+		name_label.position.x = sprite.position.x - (text_width / 2.0)
+		name_label.position.y = sprite.position.y + label_offset_y
 
 func _physics_process(delta: float) -> void:
 	die_in_abyss()
@@ -90,3 +101,28 @@ func _physics_process(delta: float) -> void:
 		velocity.x = 0
 		
 	move_and_slide()
+
+func _create_hover_label():
+	name_label = Label.new()
+	
+	if enemy_data:
+		name_label.text = enemy_data.enemy_name
+		name_label.add_theme_color_override("font_color", enemy_data.name_color)
+	else:
+		name_label.text = name
+		name_label.add_theme_color_override("font_color", Color.WHITE)
+		
+	var font = load("res://ui/font/VCR OSD Mono Nova/VCROSDMonoNova.ttf")
+	if font:
+		name_label.add_theme_font_override("font", font)
+		name_label.add_theme_font_size_override("font_size", 12)
+		
+	name_label.visible = false
+	add_child(name_label)
+	
+	
+func _mouse_enter() -> void:
+	if name_label: name_label.visible = true
+
+func _mouse_exit() -> void:
+	if name_label: name_label.visible = false
