@@ -14,9 +14,10 @@ class_name EnemyBase
 
 # ОТБРАСЫВАНИЕ
 @export var knockback_force: float = 200.0
-@export var knockback_force_x: float = 300.0
+@export var knockback_force_x: float = 250.0
 @export var knockback_force_y: float = -200.0
 var knockback_velocity: Vector2 = Vector2.ZERO
+var knockback_timer: float
 
 
 # НАДПИСЬ ИМЕНИ
@@ -82,8 +83,10 @@ func take_damage(amount: int) -> void:
 	# Направление от игрока (1 вправо, -1 влево)
 		var direction = 1.0 if player.global_position.x < global_position.x else -1.0
 	# Задаем импульс: летим вбок по направлению атаки и подлетаем вверх
-		knockback_velocity = Vector2(direction * knockback_force_x, knockback_force_y)
-	
+		knockback_velocity.x = direction * knockback_force_x
+		knockback_timer = 0.45 # Время отключения ИИ
+		velocity.y = knockback_force_y
+		
 	# 2. МГНОВЕННЫЙ ВИЗУАЛ КРАСНОГО ЦВЕТА
 	if sprite:
 		sprite.modulate = Color(10, 1, 1)
@@ -106,15 +109,6 @@ func take_damage(amount: int) -> void:
 		await get_tree().create_timer(0.4).timeout
 		die(false) # И только теперь полностью удаляем ег
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 # ТЕКСТ УРОНА
 func _spawn_damage_text(amount: int):
@@ -176,23 +170,25 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	die_in_abyss()
-	
 	# Гравитация работает всегда (даже для трупа в полете)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
-	# МАГИЯ ТРЕНИЯ ДЛЯ ОТСКОКА
-	knockback_velocity.x = move_toward(knockback_velocity.x, 0.0, 1500.0 * delta)
-	if knockback_velocity.y != 0:
-		velocity.y = knockback_velocity.y
-		knockback_velocity.y = 0
+	# 2. ТРЕНИЕ ТОЛЬКО ПО ОСИ X
+	# Плавно тормозим полет назад, чтобы враг не летел до конца карты
+	knockback_velocity.x = move_toward(knockback_velocity.x, 0.0, 500.0 * delta)
 
-	# ПРОВЕРКА: Если враг технически мертв, ИИ ОТКЛЮЧАЕТСЯ
-	if is_dead:
-		# Скорость ходьбы равна 0. Работает только импульс отбрасывания!
+		
+	if knockback_timer > 0.0 or is_dead:
+		# ИИ отключен! Скорость ходьбы равна 0, работает ТОЛЬКО чистый импульс отскока
+		if knockback_timer > 0.0: knockback_timer -= delta
+		# ВНИМАНИЕ: Если враг летит от удара и физически УПЁРСЯ В СТЕНУ
+		if is_on_wall():
+			# Мгновенно выжигаем горизонтальный импульс в ноль!
+			knockback_velocity.x = 0.
 		velocity.x = knockback_velocity.x
 	else:
-		# ОБЫЧНЫЙ РЕЖИМ ИИ ДЛЯ ЖИВОГО ВРАГА
+		# Враг пришел в себя! Включаем обычный режим преследования
 		var player = get_tree().get_first_node_in_group("player")
 		if player and not player.get("is_dead"):
 			var distance = global_position.distance_to(player.global_position)
@@ -209,16 +205,13 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = 0
 			
-		# Прибавляем силу отскока к скорости ходьбы живого врага
-		velocity.x += knockback_velocity.x
-	
+
 	
 	# заряжаем зону атаки врага его текущим уроном из ресурса
 	if has_node("HurtBox"):
 		$HurtBox.set_meta("attack_power", damage)
 	elif has_node("Hurtbox"):
 		$Hurtbox.set_meta("attack_power", damage)
-	
 	
 	move_and_slide()
 

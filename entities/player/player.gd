@@ -137,12 +137,14 @@ func _physics_process(delta: float) -> void:
 		%WeaponSlot.position.x = -hand_offset_x
 		%ArmorSlot.scale.x = -1.0
 		$AmuletSlot.scale.x = -1.0
+		%FistAttackArea.scale.x = -1.0
 		weapon_slot.scale.x = -1.0
 	elif direction > 0:
 		sprite.flip_h = false
 		%WeaponSlot.position.x = hand_offset_x
 		%ArmorSlot.scale.x = 1.0
 		$AmuletSlot.scale.x = 1.0
+		%FistAttackArea.scale.x = 1.0
 		weapon_slot.scale.x = 1.0
 		
 	if !(is_frozen or is_dead) and Input.is_action_just_pressed("attack") and get_viewport().gui_get_hovered_control() == null:
