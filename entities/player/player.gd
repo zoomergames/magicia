@@ -12,6 +12,7 @@ var has_amulet: bool = false
 var speed: int = 200
 var jump_velocity: int = -400
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
+
 var knockback_timer: float = 0.0
 
 # ЗДОРОВЬЕ
@@ -122,32 +123,39 @@ func _physics_process(delta: float) -> void:
 		die_in_abyss()
 		move_and_slide()
 		return
-	
+		
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = jump_velocity
-		
-	if direction != 0:
-		velocity.x = direction * speed
+			
+	if knockback_timer <= 0.0:
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = jump_velocity
+			
+		if direction != 0:
+			velocity.x = direction * speed
+		else:
+			velocity.x = 0
+			
+		if direction < 0:
+			sprite.flip_h = true
+			%WeaponSlot.position.x = -hand_offset_x
+			%ArmorSlot.scale.x = -1.0
+			$AmuletSlot.scale.x = -1.0
+			%FistAttackArea.scale.x = -1.0
+			weapon_slot.scale.x = -1.0
+		elif direction > 0:
+			sprite.flip_h = false
+			%WeaponSlot.position.x = hand_offset_x
+			%ArmorSlot.scale.x = 1.0
+			$AmuletSlot.scale.x = 1.0
+			%FistAttackArea.scale.x = 1.0
+			weapon_slot.scale.x = 1.0
 	else:
-		velocity.x = 0
+		knockback_timer -= delta
+		velocity.x = move_toward(velocity.x, 0.0, 1500.0 * delta)
 		
-	if direction < 0:
-		sprite.flip_h = true
-		%WeaponSlot.position.x = -hand_offset_x
-		%ArmorSlot.scale.x = -1.0
-		$AmuletSlot.scale.x = -1.0
-		%FistAttackArea.scale.x = -1.0
-		weapon_slot.scale.x = -1.0
-	elif direction > 0:
-		sprite.flip_h = false
-		%WeaponSlot.position.x = hand_offset_x
-		%ArmorSlot.scale.x = 1.0
-		$AmuletSlot.scale.x = 1.0
-		%FistAttackArea.scale.x = 1.0
-		weapon_slot.scale.x = 1.0
 		
+	# атака
 	if !(is_frozen or is_dead) and Input.is_action_just_pressed("attack") and get_viewport().gui_get_hovered_control() == null:
 		if weapon_slot.get_child_count() > 0:
 			var current_weapon = weapon_slot.get_child(0)
@@ -273,7 +281,7 @@ func take_damage(amount: int, enemy_area: Area2D):
 		return
 	
 	current_hp -= amount
-	invulnerability_timer = 0.5
+	invulnerability_timer = 1.5
 	print("[ИГРОК] Получил урон: ", amount, ". Осталось ХП: ", current_hp)
 	
 	Global.update_hearts_display()
@@ -288,6 +296,7 @@ func take_damage(amount: int, enemy_area: Area2D):
 		else:
 			velocity.x = -350.0
 		velocity.y = -150.0
+		knockback_timer = 0.2
 
 		
 	if amount:

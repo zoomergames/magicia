@@ -12,8 +12,8 @@ size = Vector2(20, 51)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkugw"]
 size = Vector2(20, 50)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_fkugw"]
-radius = 15.132746
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fjmc"]
+size = Vector2(28, 50)
 
 [node name="Player" type="CharacterBody2D" unique_id=152261700]
 collision_layer = 2
@@ -62,5 +62,5 @@ monitoring = false
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FistAttackArea" unique_id=1786704301]
-position = Vector2(17, 17)
-shape = SubResource("CircleShape2D_fkugw")
+position = Vector2(25, 11)
+shape = SubResource("RectangleShape2D_8fjmc")
