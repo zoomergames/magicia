@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cih6c6kf1kr5f"]
+
+[ext_resource type="Texture2D" uid="uid://bkdlfr6s080tu" path="res://items/weapons/ak-47/ak-47.png" id="1_iyfkg"]
+[ext_resource type="Texture2D" uid="uid://d448fkexxdl8" path="res://items/weapons/ak-47/shootfire.png" id="2_2ap1q"]
+
+[node name="Ak47" type="Node2D" unique_id=23429491]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1976718508]
+texture = ExtResource("1_iyfkg")
+
+[node name="FireSprite" type="Sprite2D" parent="." unique_id=22024620]
+position = Vector2(36, 4)
+texture = ExtResource("2_2ap1q")
+vframes = 2

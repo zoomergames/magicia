@@ -12,6 +12,7 @@ var has_amulet: bool = false
 var speed: int = 200
 var jump_velocity: int = -400
 var gravity: int = ProjectSettings.get_setting("physics/2d/default_gravity")
+var knockback_timer: float = 0.0
 
 # ЗДОРОВЬЕ
 var current_hp: int = 30

@@ -87,7 +87,7 @@ func take_damage(amount: int) -> void:
 		knockback_timer = 0.45 # Время отключения ИИ
 		velocity.y = knockback_force_y
 		
-	# 2. МГНОВЕННЫЙ ВИЗУАЛ КРАСНОГО ЦВЕТА
+	# 2. ВИЗУАЛ КРАСНОГО ЦВЕТА
 	if sprite:
 		sprite.modulate = Color(10, 1, 1)
 		get_tree().create_timer(0.15).timeout.connect(func():
@@ -116,7 +116,7 @@ func _spawn_damage_text(amount: int):
 	dmg_label.text = "-" + str(amount)
 	
 	# стиль
-	dmg_label.add_theme_color_override("font_color", Color(1, 0.3, 0.3))
+	dmg_label.add_theme_color_override("font_color", Color(0.935, 0.0, 0.154, 1.0))
 	# шрифт
 	var font = load("res://ui/font/VCR OSD Mono Nova/VCROSDMonoNova.ttf")
 	if font:

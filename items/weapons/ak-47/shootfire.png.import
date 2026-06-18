@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcmpin84bumbo"
-path="res://.godot/imported/dead_magic_heart.png-9a1788a1fd137e9bf4571f75d6e7ee0f.ctex"
+uid="uid://d448fkexxdl8"
+path="res://.godot/imported/shootfire.png-a6d5d698114f00b71a35ad14b3e0b5aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/health_bar/dead_magic_heart.png"
-dest_files=["res://.godot/imported/dead_magic_heart.png-9a1788a1fd137e9bf4571f75d6e7ee0f.ctex"]
+source_file="res://items/weapons/ak-47/shootfire.png"
+dest_files=["res://.godot/imported/shootfire.png-a6d5d698114f00b71a35ad14b3e0b5aa.ctex"]
 
 [params]
 

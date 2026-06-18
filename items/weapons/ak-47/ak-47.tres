@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cssmt5bxvufo7"]
+
+[ext_resource type="Script" uid="uid://cnngvcyavt4ek" path="res://items/item_data.gd" id="1_4m14m"]
+[ext_resource type="Texture2D" uid="uid://bkdlfr6s080tu" path="res://items/weapons/ak-47/ak-47.png" id="1_tjesr"]
+
+[resource]
+script = ExtResource("1_4m14m")
+item_id = "005"
+item_name = "АК-47"
+weapon_name = "АК-47"
+icon = ExtResource("1_tjesr")
+type = "firearm"
+attack_speed = 0.1
+cost = 10
+description = "Легендарный советский автомат. Сталин одобряет."
+metadata/_custom_type_script = "uid://cnngvcyavt4ek"

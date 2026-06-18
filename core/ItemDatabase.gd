@@ -3,7 +3,7 @@ extends Node
 var registry: Dictionary = {
 	"001": {
 		"type": "weapon",
-		"data_script": "res://entities/player/weapons/little_sword/little_sword.tres"
+		"data_script": "res://items/weapons/little_sword/little_sword.tres"
 	},
 	"002": {
 		"type": "armor",
@@ -12,7 +12,19 @@ var registry: Dictionary = {
 	"003": {
 		"type": "amulet",
 		"data_script": "res://items/artifacts/magisyanik_hand/magisyanik_hand.tres"
-		}
+		},
+	"004": {
+		"tyoe": "weapon",
+		"data_script": "res://items/weapons/fist/fist.tres"
+	},
+	"005": {
+		"type": "weapon",
+		"data_script": "res://items/weapons/ak-47/ak-47.tres"
+	},
+	"006": {
+		"type": "weapon",
+		"data_script": "res://items/weapons/dragon_slayer/dragon_slayer.tres"
+	}
 }
 
 func get_item_tooltip_text(item_data: Resource) -> String:

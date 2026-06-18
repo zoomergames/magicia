@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1te4rqxhmecq"
-path="res://.godot/imported/dead_heart.png-33659a9dfef1dd824ba830349c532b04.ctex"
+uid="uid://by2ayj5quyt3d"
+path="res://.godot/imported/dragon_slayer.png-33b99f13014cabd4338b491435796af6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/health_bar/dead_heart.png"
-dest_files=["res://.godot/imported/dead_heart.png-33659a9dfef1dd824ba830349c532b04.ctex"]
+source_file="res://items/weapons/dragon_slayer/dragon_slayer.png"
+dest_files=["res://.godot/imported/dragon_slayer.png-33b99f13014cabd4338b491435796af6.ctex"]
 
 [params]
 

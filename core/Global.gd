@@ -73,9 +73,9 @@ func update_hearts_display() -> void:
 		heart_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		
 		if i < current_red_hearts:
-			heart_rect.texture = load("res://ui/health_bar/heart.png")
+			heart_rect.texture = load("res://ui/health_bar/full/heart.png")
 		else:
-			heart_rect.texture = load("res://ui/health_bar/dead_heart.png")
+			heart_rect.texture = load("res://ui/health_bar/dead/dead_heart.png")
 		hearts_container_node.add_child(heart_rect)
 func log_to_chat(message: String) -> void: # логика игровой панели чата
 	if chat_node != null:

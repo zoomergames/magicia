@@ -13,8 +13,8 @@ radius = 13.0
 height = 46.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ooo44"]
-radius = 11.0
-height = 40.0
+radius = 9.0
+height = 34.0
 
 [node name="Magisyanik" type="CharacterBody2D" unique_id=190714769 node_paths=PackedStringArray("sprite")]
 collision_layer = 4
