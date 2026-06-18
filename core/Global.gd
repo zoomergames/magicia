@@ -64,6 +64,8 @@ func update_hearts_display() -> void:
 		
 	var total_base_hearts: int = player.max_base_hp / 10
 	var current_red_hearts: int = player.current_hp / 10
+	var has_half_heart: bool = (player.current_hp % 10 > 0)
+		
 	
 	for i in range(total_base_hearts):
 		var heart_rect = TextureRect.new()
@@ -74,9 +76,13 @@ func update_hearts_display() -> void:
 		
 		if i < current_red_hearts:
 			heart_rect.texture = load("res://ui/health_bar/full/heart.png")
+		elif i == current_red_hearts and has_half_heart:
+			heart_rect.texture = load("res://ui/health_bar/half/half_heart.png")
 		else:
 			heart_rect.texture = load("res://ui/health_bar/dead/dead_heart.png")
 		hearts_container_node.add_child(heart_rect)
+		
+		
 func log_to_chat(message: String) -> void: # логика игровой панели чата
 	if chat_node != null:
 		chat_node.append_text(message + "\n")
