@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cv6pexmaeal72"]
+
+[ext_resource type="Texture2D" uid="uid://by2ayj5quyt3d" path="res://items/weapons/dragon_slayer/dragon_slayer.png" id="1_ejxuk"]
+[ext_resource type="Script" uid="uid://cnngvcyavt4ek" path="res://items/item_data.gd" id="1_fxdoa"]
+[ext_resource type="PackedScene" uid="uid://vh3coohtjgms" path="res://items/weapons/dragon_slayer/dragon_slayer.tscn" id="2_72spi"]
+
+[resource]
+script = ExtResource("1_fxdoa")
+item_id = "006"
+item_name = "Убийца Драконов"
+weapon_name = "Убийца Драконов"
+icon = ExtResource("1_ejxuk")
+scene = ExtResource("2_72spi")
+damage = 666
+attack_speed = 1.9
+cost = 666
+description = "Легендарный меч Гатса."
+metadata/_custom_type_script = "uid://cnngvcyavt4ek"

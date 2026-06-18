@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cnngvcyavt4ek" path="res://items/item_data.gd" id="1_4m14m"]
 [ext_resource type="Texture2D" uid="uid://bkdlfr6s080tu" path="res://items/weapons/ak-47/ak-47.png" id="1_tjesr"]
+[ext_resource type="PackedScene" uid="uid://cih6c6kf1kr5f" path="res://items/weapons/ak-47/ak-47.tscn" id="2_5ti6d"]
 
 [resource]
 script = ExtResource("1_4m14m")
@@ -9,6 +10,7 @@ item_id = "005"
 item_name = "АК-47"
 weapon_name = "АК-47"
 icon = ExtResource("1_tjesr")
+scene = ExtResource("2_5ti6d")
 type = "firearm"
 attack_speed = 0.1
 cost = 10

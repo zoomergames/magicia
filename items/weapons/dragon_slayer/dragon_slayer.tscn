@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://vh3coohtjgms"]
+
+[ext_resource type="Texture2D" uid="uid://by2ayj5quyt3d" path="res://items/weapons/dragon_slayer/dragon_slayer.png" id="1_kyb0r"]
+
+[node name="DragonSlayer" type="Node2D" unique_id=1526624673]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=134052871]
+texture = ExtResource("1_kyb0r")
