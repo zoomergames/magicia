@@ -22,6 +22,10 @@ var max_magic_hp: int = 100
 
 var invulnerability_timer: float = 0.0
 
+# КУЛАК
+var current_damage: int = 5
+var current_attack_speed: float = 0.3
+
 @onready var sprite = %Sprite2D
 @onready var weapon_slot = %WeaponSlot
 @onready var hand_offset_x = %WeaponSlot.position.x
@@ -40,7 +44,7 @@ func _sync_inventory_from_visual_slots() -> void:
 	
 	# Оружие
 	if weapon_slot.get_child_count() > 0:
-		var path = "res://entities/player/weapons/little_sword/little_sword.tres"
+		var path = "res://items/weapons/little_sword/little_sword.tres"
 		print("Загружаю оружие по пути: ", path)
 		var data = load(path)
 		print("Получен объект: ", data)
@@ -145,6 +149,9 @@ func _physics_process(delta: float) -> void:
 		if weapon_slot.get_child_count() > 0:
 			var current_weapon = weapon_slot.get_child(0)
 			current_weapon.try_attack()
+		else:
+			# бьём кулаком
+			_execute_fist_attack()
 			
 			
 	# атакуют игрока
@@ -171,7 +178,38 @@ func _physics_process(delta: float) -> void:
 			
 	move_and_slide()
 	die_in_abyss()
-
+	
+	
+var is_fist_recharging: bool = false
+func _execute_fist_attack():
+	if is_fist_recharging:
+		return
+	is_fist_recharging = true
+	print("Удар кулаком! Нанесено урона: ", current_damage)
+	
+	# подключаем hurtbox кулака
+	if has_node("FistAttackArea"):
+		%FistAttackArea.set_meta("attack_power", current_damage)
+		%FistAttackArea.monitoring = true
+		%FistAttackArea.monitorable = true
+		
+		await get_tree().physics_frame
+		
+		# проверяем, кого задели
+		var targets = %FistAttackArea.get_overlapping_areas()
+		for target in targets:
+			var enemy = target.get_parent()
+			if enemy.has_method("take_damage"):
+				enemy.take_damage(current_damage)
+				
+		await get_tree().create_timer(0.1).timeout
+		%FistAttackArea.monitoring = false
+		if %FistAttackArea.has_meta("attack_power"):
+			%FistAttackArea.remove_meta("attack_power")
+		
+		await get_tree().create_timer(current_attack_speed).timeout
+		is_fist_recharging = false
+	
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("slot_1"):
 		Global.active_slot_index = 0
@@ -190,12 +228,19 @@ func _input(_event: InputEvent) -> void:
 		change_hand_weapon()
 
 func change_hand_weapon() -> void:
+	# удаляем старое оружие из рук
 	for child in weapon_slot.get_children():
 		child.queue_free()
-		
+	
+	# если слот пуст - включаем кулаки
 	if Global.inventory[Global.active_slot_index] == null:
+		var fist_data = load("res://items/weapons/fist/fist.tres")
+		if fist_data:
+			current_damage = fist_data.damage
+			current_attack_speed = fist_data.attack_speed
 		return
 		
+	# если в слоте есть оружие	
 	var item_data = Global.inventory[Global.active_slot_index]
 	if item_data and item_data.scene:
 		var instance = item_data.scene.instantiate()
@@ -203,6 +248,10 @@ func change_hand_weapon() -> void:
 		if "weapon_data" in instance:
 			instance.weapon_data = item_data
 		weapon_slot.add_child(instance)
+		
+		# Сбрасываем урон игрока на урон меча, чтобы кулаки не смешивались с оружием
+		current_damage = item_data.damage
+		current_attack_speed = item_data.attack_speed
 
 
 func check_magic_hearts_activation() -> void:

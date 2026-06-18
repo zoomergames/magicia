@@ -16,7 +16,7 @@ func run_dialogue_step() -> void:
 	elif dialogue_step == 7:
 		Global.log_to_chat("[color=orange][%s][/color] [b][color=white]Ну-у... ничего?[/color][/b]" % Global.player_name)
 	elif dialogue_step == 8:
-		var path = "res://entities/player/weapons/little_sword/little_sword.tres" # проверьте этот путь!
+		var path = "res://items/weapons/little_sword/little_sword.tres"
 	
 		if not ResourceLoader.exists(path):
 			Global.log_to_chat("[color=red][Система]: Ошибка! Файл меча потерялся в текстурах Каппы.[/color]")
