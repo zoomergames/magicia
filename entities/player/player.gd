@@ -116,7 +116,10 @@ func _physics_process(delta: float) -> void:
 		invulnerability_timer -= delta
 	var direction = Input.get_axis("move_left", "move_right")
 	
-	if is_frozen or is_dead:
+	if is_dead and knockback_timer <= 0.0 and visible:
+		_start_death_logic()
+		
+	if is_frozen  or (is_dead and knockback_timer <= 0.0):
 		velocity.x = 0
 		if not is_on_floor():
 			velocity.y += gravity * delta
@@ -126,7 +129,7 @@ func _physics_process(delta: float) -> void:
 		
 	if not is_on_floor():
 		velocity.y += gravity * delta
-			
+		
 	if knockback_timer <= 0.0:
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = jump_velocity
@@ -153,7 +156,6 @@ func _physics_process(delta: float) -> void:
 	else:
 		knockback_timer -= delta
 		velocity.x = move_toward(velocity.x, 0.0, 1500.0 * delta)
-		
 		
 	# атака
 	if !(is_frozen or is_dead) and Input.is_action_just_pressed("attack") and get_viewport().gui_get_hovered_control() == null:
@@ -288,9 +290,9 @@ func take_damage(amount: int, enemy_area: Area2D):
 	if current_hp <= 0:
 		is_dead = true
 		current_hp = 0
-		_start_death_logic()
+		# _start_death_logic()
 		
-	if not is_dead:
+	if enemy_area != null:
 		if enemy_area.global_position.x < global_position.x:
 			velocity.x = 350.0
 		else:
