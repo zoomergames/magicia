@@ -40,10 +40,19 @@ func try_attack() -> void:
 		attack_area = get_node_or_null("%AttackArea") as Area2D
 
 	if attack_area:
+		# КРИТИЧЕСКИЙ УРОН
+		var final_damage = damage
+		var player = get_tree().get_first_node_in_group("player")
+		if weapon_data.type == "cold":
+			if not player.is_on_floor():
+				final_damage = damage * 2.0
+			elif player.velocity.x != 0:
+				final_damage = damage * 1.5
+		
 		# Насильно будим геометрию зоны в Godot 4
 		attack_area.monitoring = true
 		attack_area.monitorable = true
-		attack_area.set_meta("attack_power", damage)
+		attack_area.set_meta("attack_power", final_damage)
 		
 		# Ждём один физический кадр, чтобы Godot 4 ТОЧНО обновил столкновения
 		await get_tree().physics_frame
@@ -62,7 +71,7 @@ func try_attack() -> void:
 			if enemy.has_method("take_damage"):
 				print("[БОЙ]: Напрямую бью врага ", enemy.name, " на ", damage, " урона!")
 				# Вламываем ему урон напрямую в лицо!
-				enemy.take_damage(damage)
+				enemy.take_damage(final_damage)
 
 	attack() # Ваш визуал взмаха
 	

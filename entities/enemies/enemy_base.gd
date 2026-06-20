@@ -73,12 +73,23 @@ func _ready() -> void:
 func take_damage(amount: int) -> void:
 	if is_dead:
 		return
+	
+	var player = get_tree().get_first_node_in_group("player")
+	
+	if Global.inventory[Global.active_slot_index] != null:
+		# Оружие ЕСТЬ в руке
+		if player != null and not player.is_on_floor() and Global.inventory[Global.active_slot_index].type == "cold":
+			Global.log_to_chat("[color=yellow]КРИТИЧЕСКИЙ УДАР![/color]")
+	else:
+		# В руке НИЧЕГО НЕТ — значит, бьем КУЛАКАМИ!
+		if player != null and not player.is_on_floor():
+			Global.log_to_chat("[color=yellow]КРИТИЧЕСКИЙ УДАР![/color]")
+		
 		
 	current_hp -= amount
 	print("[УДАР] Враг ", name, " получил урон: ", amount, ". Осталось ХП: ", current_hp)
 	
 	# 1. ОТБРАСЫВАНИЕ
-	var player = get_tree().get_first_node_in_group("player")
 	if player:
 	# Направление от игрока (1 вправо, -1 влево)
 		var direction = 1.0 if player.global_position.x < global_position.x else -1.0

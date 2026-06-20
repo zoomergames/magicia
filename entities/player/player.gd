@@ -198,14 +198,23 @@ func _physics_process(delta: float) -> void:
 	
 var is_fist_recharging: bool = false
 func _execute_fist_attack():
+	# КРИТИЧЕСКИЙ УРОН
+	var final_damage = current_damage
+	if not is_on_floor():
+		final_damage = current_damage * 2.0
+	elif velocity.x != 0:
+		final_damage = current_damage * 1.5
+	%FistAttackArea.set_meta("attack_power", final_damage)
+	
+	
 	if is_fist_recharging:
 		return
 	is_fist_recharging = true
-	print("Удар кулаком! Нанесено урона: ", current_damage)
+	print("Удар кулаком! Нанесено урона: ", final_damage)
 	
 	# подключаем hurtbox кулака
 	if has_node("FistAttackArea"):
-		%FistAttackArea.set_meta("attack_power", current_damage)
+		%FistAttackArea.set_meta("attack_power", final_damage)
 		%FistAttackArea.monitoring = true
 		%FistAttackArea.monitorable = true
 		
@@ -216,7 +225,7 @@ func _execute_fist_attack():
 		for target in targets:
 			var enemy = target.get_parent()
 			if enemy.has_method("take_damage"):
-				enemy.take_damage(current_damage)
+				enemy.take_damage(final_damage)
 				
 		await get_tree().create_timer(0.1).timeout
 		%FistAttackArea.monitoring = false
