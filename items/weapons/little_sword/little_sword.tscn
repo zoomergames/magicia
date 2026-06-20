@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dinyql5tr8f2c"]
 
 [ext_resource type="Texture2D" uid="uid://bncsyrmiqt131" path="res://items/weapons/little_sword/small_sword.png" id="1_bqsul"]
-[ext_resource type="Script" uid="uid://ckvac6l0eko2u" path="res://items/weapons/little_sword/little_sword.gd" id="1_tmba2"]
+[ext_resource type="Script" uid="uid://car6lubawn3cm" path="res://items/weapons/little_sword/little_sword.gd" id="1_tmba2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tmba2"]
 size = Vector2(18, 18)
