@@ -94,6 +94,8 @@ func die_in_abyss():
 		visible = false
 		Global.update_hearts_display()
 		
+		fade_in_death_screen()
+		
 		Global.log_to_chat("[color=red]%s[/color] выпал из этого мира" % Global.player_name)
 		await get_tree().create_timer(1.0).timeout
 		Global.log_to_chat("[color=gray]возрождение через 3...[/color]")
@@ -108,6 +110,7 @@ func die_in_abyss():
 		current_hp = 30
 		is_dead = false
 		Global.update_hearts_display()
+		fade_out_death_screen()
 		Global.log_to_chat("[color=green]Вы успешно возродились![/color]")
 		check_magic_hearts_activation()
 
@@ -309,6 +312,8 @@ func take_damage(amount: int, enemy_area: Area2D):
 func _start_death_logic() -> void:
 	visible = false
 	
+	fade_in_death_screen()
+	
 	Global.log_to_chat("[color=red]%s[/color] был аннигилирован монстрами!" % Global.player_name)
 	await get_tree().create_timer(1.0).timeout
 	Global.log_to_chat("[color=gray]возрождение через 3...[/color]")
@@ -323,9 +328,30 @@ func _start_death_logic() -> void:
 	visible = true
 	current_hp = 30 # Ваше стартовое ХП при респавне
 	is_dead = false
+	
+	fade_out_death_screen()
+
 	Global.update_hearts_display()
 	Global.log_to_chat("[color=green]Вы успешно возродились![/color]")
 	check_magic_hearts_activation()
+	
+# Функция плавного заливания экрана кровью
+func fade_in_death_screen() -> void:
+	var hud = get_tree().get_first_node_in_group("hud")
+	if hud and hud.has_node("%DeathOverlay"):
+		var overlay = hud.get_node("%DeathOverlay")
+		if overlay:
+			var fade_in_tween = create_tween()
+			fade_in_tween.tween_property(overlay, "modulate:a", 0.5, 0.4)
+
+# Функция плавного очищения экрана при возрождении
+func fade_out_death_screen() -> void:
+	var hud = get_tree().get_first_node_in_group("hud")
+	if hud and hud.has_node("%DeathOverlay"):
+		var overlay = hud.get_node("%DeathOverlay")
+		if overlay:
+			var fade_out_tween = create_tween()
+			fade_out_tween.tween_property(overlay, "modulate:a", 0.0, 0.5)
 
 func _process(_delta: float) -> void:
 	# 1. ОБРАБОТКА НАЖАТИЯ ЦИФР 1-7

@@ -24,9 +24,9 @@ position = Vector2(440, 235)
 [node name="Kappa" parent="." unique_id=1534572424 instance=ExtResource("4_cjuek")]
 position = Vector2(896, 311)
 
-[node name="ChatUI" parent="." unique_id=1377273628 instance=ExtResource("4_a04qp")]
-
 [node name="HUD" parent="." unique_id=1667204069 instance=ExtResource("5_sjcnv")]
+
+[node name="ChatUI" parent="." unique_id=1377273628 instance=ExtResource("4_a04qp")]
 
 [node name="InventoryUI" parent="." unique_id=150171140 instance=ExtResource("7_vhpdd")]
 

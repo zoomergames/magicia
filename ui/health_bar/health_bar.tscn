@@ -5,6 +5,17 @@
 [node name="HUD" type="CanvasLayer" unique_id=1667204069]
 script = ExtResource("1_k6fmd")
 
+[node name="DeathOverlay" type="ColorRect" parent="." unique_id=938898109]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.56078434, 0, 0.05490196, 1)
+
 [node name="HeartsContainer" type="HBoxContainer" parent="." unique_id=2008369661]
 unique_name_in_owner = true
 offset_left = 9.0
