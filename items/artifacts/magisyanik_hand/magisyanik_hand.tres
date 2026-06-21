@@ -1,11 +1,19 @@
-[gd_resource type="Resource" format=3 uid="uid://d2fehyyc3tak5"]
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://d2fehyyc3tak5"]
 
 [ext_resource type="Texture2D" uid="uid://dnk4igaf0inx2" path="res://entities/enemies/magisyanik/magisyanik_hand.png" id="1_r5oc4"]
 [ext_resource type="PackedScene" uid="uid://x7robkhmkv22" path="res://items/artifacts/magisyanik_hand/magisyanik_hand.tscn" id="2_mp8d6"]
-[ext_resource type="Script" uid="uid://jpscgy0xd36" path="res://items/artifacts/magisyanik_hand/magisyanik_hand_data.gd" id="3_r5oc4"]
+[ext_resource type="Script" uid="uid://cnngvcyavt4ek" path="res://items/item_data.gd" id="3_r5oc4"]
 
 [resource]
 script = ExtResource("3_r5oc4")
+item_id = "003"
+item_name = "Ладонь Маджисяника"
+weapon_name = "Ладонь Маджисяника"
 icon = ExtResource("1_r5oc4")
 scene = ExtResource("2_mp8d6")
-metadata/_custom_type_script = "uid://b7pftcglyjq40"
+type = "amulet"
+attack_speed = 5.0
+cost = 25
+description = "Странная летающая рука с глазом. Даёт жуткую уверенность."
+has_magic = true
+mana_bonus = 25

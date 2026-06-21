@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cn44yi5cfohmw" path="res://ui/inventory/inventory_bar.tscn" id="7_vhpdd"]
 [ext_resource type="PackedScene" uid="uid://buriqo0q83ytq" path="res://ui/tooltip/tooltip.tscn" id="8_gjr3k"]
 [ext_resource type="PackedScene" uid="uid://dftaaw8crcpf" path="res://entities/enemies/magisyanik/magisyanik.tscn" id="9_4cdhi"]
+[ext_resource type="PackedScene" uid="uid://d3m0cflg8cdht" path="res://entities/enemies/goblin/goblin.tscn" id="10_fgh25"]
 
 [node name="Node" type="Node" unique_id=1864193894]
 
@@ -16,7 +17,7 @@
 position = Vector2(203, 369)
 
 [node name="Player" parent="." unique_id=152261700 instance=ExtResource("2_5sg27")]
-position = Vector2(524, 122)
+position = Vector2(276, 267)
 
 [node name="Emilia" parent="." unique_id=847629978 instance=ExtResource("3_8xnxh")]
 position = Vector2(440, 235)
@@ -42,3 +43,24 @@ position = Vector2(284, -597)
 
 [node name="Magisyanik3" parent="." unique_id=2004420853 instance=ExtResource("9_4cdhi")]
 position = Vector2(321, -235)
+
+[node name="Goblin" parent="." unique_id=63099930 instance=ExtResource("10_fgh25")]
+position = Vector2(2330, 226)
+
+[node name="Goblin2" parent="." unique_id=609410042 instance=ExtResource("10_fgh25")]
+position = Vector2(2330, 226)
+
+[node name="Goblin3" parent="." unique_id=1015862947 instance=ExtResource("10_fgh25")]
+position = Vector2(2330, 226)
+
+[node name="Goblin4" parent="." unique_id=1165567357 instance=ExtResource("10_fgh25")]
+position = Vector2(2330, 226)
+
+[node name="Goblin5" parent="." unique_id=539279368 instance=ExtResource("10_fgh25")]
+position = Vector2(2330, 226)
+
+[node name="Goblin6" parent="." unique_id=71420406 instance=ExtResource("10_fgh25")]
+position = Vector2(2330, 226)
+
+[node name="Goblin7" parent="." unique_id=108051186 instance=ExtResource("10_fgh25")]
+position = Vector2(2330, 226)

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b4mnv57gs08ya" path="res://entities/player/player_camera.tscn" id="3_8fjmc"]
 [ext_resource type="PackedScene" uid="uid://smefc3j1vjsl" path="res://items/armors/super_costume/super_costume.tscn" id="3_fkugw"]
 [ext_resource type="Script" uid="uid://dpc1jyd5vjmsc" path="res://entities/player/player_camera.gd" id="4_qiwj3"]
+[ext_resource type="PackedScene" uid="uid://x7robkhmkv22" path="res://items/artifacts/magisyanik_hand/magisyanik_hand.tscn" id="6_8fjmc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_abrql"]
 size = Vector2(20, 51)
@@ -40,6 +41,9 @@ position = Vector2(0, 24)
 
 [node name="AmuletSlot" type="Node2D" parent="." unique_id=1060216806]
 unique_name_in_owner = true
+
+[node name="MagisyanikHand" parent="AmuletSlot" unique_id=969402363 instance=ExtResource("6_8fjmc")]
+position = Vector2(-29, 3)
 
 [node name="WeaponSlot" type="Node2D" parent="." unique_id=1321964726]
 unique_name_in_owner = true

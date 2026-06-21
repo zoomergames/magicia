@@ -41,6 +41,7 @@ var is_dialogue_active: bool = false
 var dialogue_step: int = 0
 
 var hearts_container_node: HBoxContainer = null
+var magic_hearts_container_node: HBoxContainer = null
 
 func update_hearts_display() -> void:
 	# Пытаемся найти контейнер, если его нет
@@ -49,27 +50,43 @@ func update_hearts_display() -> void:
 		if hud and hud.has_node("HeartsContainer"):
 			hearts_container_node = hud.get_node("HeartsContainer")
 		else:
-			# Если всё равно не нашли — просто выходим без ошибки
 			return
-	
+			
+	if magic_hearts_container_node == null:
+		var hud = get_tree().get_first_node_in_group("hud")
+		if hud and hud.has_node("%MagicHeartsContainer"):
+			magic_hearts_container_node = hud.get_node("%MagicHeartsContainer")
+			
 	if hearts_container_node == null:
 		return
 	
 	for child in hearts_container_node.get_children():
 		child.queue_free()
 		
+	if magic_hearts_container_node != null:
+		for child in magic_hearts_container_node.get_children():
+			child.queue_free()
+		
 	var player = get_tree().get_first_node_in_group("player")
 	if not player:
 		return
 		
+	# --- МАТЕМАТИКА КРАСНЫХ СЕРДЕЦ ---
 	var total_base_hearts: int = player.max_base_hp / 10
 	var current_red_hearts: int = player.current_hp / 10
 	var has_half_heart: bool = (player.current_hp % 10 > 0)
-		
 	
+	# --- МАТЕМАТИКА МАГИЧЕСКИХ СЕРДЕЦ (БЕЗ ОПЕЧАТОК) ---
+	var current_blue_hearts: int = player.current_magic_hp / 10
+	var has_half_magic_heart: bool = (int(player.current_magic_hp) % 10 > 0)
+	
+	# Лимит рамочек жестко привязан к максимальному бонусу амулета (всегда равен 3 ячейкам)
+	var has_half_magic_limit: bool = (player.active_magic_limit % 10 > 0)
+	var total_magic_hearts: int = (player.active_magic_limit / 10) + (1 if has_half_magic_limit else 0)
+
+	# --- ОТРИСОВКА КРАСНЫХ СЕРДЕЦ ---
 	for i in range(total_base_hearts):
 		var heart_rect = TextureRect.new()
-		
 		heart_rect.custom_minimum_size = Vector2(16, 13) 
 		heart_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		heart_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -82,6 +99,21 @@ func update_hearts_display() -> void:
 			heart_rect.texture = load("res://ui/health_bar/dead/dead_heart.png")
 		hearts_container_node.add_child(heart_rect)
 		
+	# --- ОТРИСОВКА МАГИЧЕСКИХ СЕРДЕЦ ---
+	for i in range(total_magic_hearts):
+		var magic_heart_rect = TextureRect.new()
+		magic_heart_rect.custom_minimum_size = Vector2(16, 13) 
+		magic_heart_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		magic_heart_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		
+		if i < current_blue_hearts:
+			magic_heart_rect.texture = load("res://ui/health_bar/full/magic_heart.png")
+		elif i == current_blue_hearts and has_half_magic_heart: # ИСПРАВЛЕНО ТУТ!
+			magic_heart_rect.texture = load("res://ui/health_bar/half/half_magic_heart.png")
+		else:
+			magic_heart_rect.texture = load("res://ui/health_bar/dead/dead_magic_heart.png")
+		magic_hearts_container_node.add_child(magic_heart_rect)
+
 		
 func log_to_chat(message: String) -> void: # логика игровой панели чата
 	if chat_node != null:

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://1gjp0m7csw86"]
+
+[ext_resource type="Script" uid="uid://dh4lc3ct31d33" path="res://entities/enemies/enemy_data.gd" id="1_s02dd"]
+
+[resource]
+script = ExtResource("1_s02dd")
+enemy_name = "Гоблин"
+name_color = Color(0.4674685, 0.9016784, 1.1551381e-06, 1)
+max_hp = 20
+speed = 100.0
+metadata/_custom_type_script = "uid://dh4lc3ct31d33"

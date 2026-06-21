@@ -12,3 +12,4 @@ class_name ItemData
 @export var cost: int = 0
 @export var description: String = "Описание предмета."
 @export var has_magic: bool = false
+@export var mana_bonus: int = 0

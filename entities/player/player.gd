@@ -21,6 +21,9 @@ var max_base_hp: int = 100
 
 var current_magic_hp: int = 0
 var max_magic_hp: int = 100
+var active_magic_limit: int = 0
+
+var magic_regen_cooldown: float = 0.0 # Сколько секунд нельзя регенерировать после удара
 
 var invulnerability_timer: float = 0.0
 
@@ -40,52 +43,75 @@ func _ready():
 	_sync_inventory_from_visual_slots()
 	
 	check_magic_hearts_activation()
+	
+	update_amulet_stats()
 
 func _sync_inventory_from_visual_slots() -> void:
-	print("=== СИНХРОНИЗАЦИЯ ИНВЕНТАРЯ ИЗ ВИЗУАЛЬНЫХ СЛОТОВ ===")
+	print("=== АВТОМАТИЧЕСКАЯ СИНХРОНИЗАЦИЯ ПО СЦЕНАМ ===")
 	
-	# Оружие
-	if weapon_slot.get_child_count() > 0:
-		var path = "res://items/weapons/little_sword/little_sword.tres"
-		print("Загружаю оружие по пути: ", path)
-		var data = load(path)
-		print("Получен объект: ", data)
-		if data:
-			print("Имя оружия: ", data.item_name)
-		Global.inventory[0] = data
-	else:
-		print("WeaponSlot пуст")
+	# Наш стандартный список слотов и их ячеек в инвентаре
+	var slots_mapping = {
+		weapon_slot: 0,
+		$AmuletSlot: 5,
+		get_node_or_null("ArmorSlot") if has_node("ArmorSlot") else get_node_or_null("%ArmorSlot"): 6
+	}
 	
-	# Броня
-	if $ArmorSlot.get_child_count() > 0:
-		var path = "res://items/armors/super_costume/super_costume.tres"
-		print("Загружаю броню по пути: ", path)
-		var data = load(path)
-		print("Получен объект: ", data)
-		if data:
-			print("Имя брони: ", data.item_name)
-		Global.inventory[6] = data
-	else:
-		print("ArmorSlot пуст")
-	
-	# Амулет
-	if $AmuletSlot.get_child_count() > 0:
-		var path = "res://items/artifacts/magisyanik_hand/magisyanik_hand.tres"
-		print("Загружаю амулет по пути: ", path)
-		var data = load(path)
-		print("Получен объект: ", data)
-		if data:
-			print("Имя амулета: ", data.item_name)
-		Global.inventory[5] = data
-	else:
-		print("AmuletSlot пуст")
-	
+	for slot in slots_mapping:
+		if slot == null:
+			continue
+			
+		var inv_index = slots_mapping[slot]
+		
+		# Если в слоте куклы игрока физически есть узел (сцена предмета)
+		if slot.get_child_count() > 0:
+			var item_node = slot.get_child(0)
+			
+			# Забираем встроенный путь к файлу этой сцены (например: "res://items/weapons/little_sword/little_sword.tscn")
+			var scene_path = item_node.scene_file_path
+			
+			if scene_path == "":
+				print("[СИНХРОНИЗАЦИЯ]: Узел ", item_node.name, " не является сохраненной сценой. Пропускаю.")
+				Global.inventory[inv_index] = null
+				continue
+				
+			# Идем в вашу базу данных ItemDatabase и ищем, какому ID принадлежит этот путь к сцене
+			var found_data = _find_item_data_by_scene_path(scene_path)
+			
+			if found_data:
+				print("[СИНХРОНИЗАЦИЯ]: В слоте ", slot.name, " автоматически распознана сцена: ", found_data.item_name)
+				Global.inventory[inv_index] = found_data
+			else:
+				print("[СИНХРОНИЗАЦИЯ]: Сцена ", scene_path, " не зарегистрирована в ItemDatabase.")
+				Global.inventory[inv_index] = null
+		else:
+			# Если физический слот пустой (например, Каппа еще не дал меч) — инвентарь чист!
+			print("[СИНХРОНИЗАЦИЯ]: Слот ", slot.name, " пуст.")
+			Global.inventory[inv_index] = null
+			
 	print("=== КОНЕЦ СИНХРОНИЗАЦИИ ===")
 	
+	# Обновляем инвентарь UI и статы амулета
 	var inv_ui = get_tree().get_first_node_in_group("inventory_ui")
 	if inv_ui:
 		inv_ui.update_all_slots()
-	# Обновляем иконки в инвентаре
+		
+	update_amulet_stats()
+	
+func _find_item_data_by_scene_path(target_scene_path: String) -> Resource:
+	# Бежим по всем ID в вашей ItemDatabase
+	for id in ItemDatabase.registry:
+		var item_info = ItemDatabase.registry[id]
+		var tres_path = item_info["data_script"]
+		
+		# Загружаем .tres файл паспорта предмета
+		var item_data = load(tres_path)
+		if item_data and "scene" in item_data and item_data.scene != null:
+			# Сравниваем путь к сцене из паспорта с тем, что реально лежит в слоте игрока
+			if item_data.scene.resource_path == target_scene_path:
+				return item_data # Нашли! Возвращаем паспорт предмета
+				
+	return null # Ничего не нашли
+
 
 func die_in_abyss():	
 	if not is_dead and global_position.y > 1000:
@@ -114,7 +140,32 @@ func die_in_abyss():
 		Global.log_to_chat("[color=green]Вы успешно возродились![/color]")
 		check_magic_hearts_activation()
 
+var regen_accumulator: float = 0.0
 func _physics_process(delta: float) -> void:
+	# 1. Уменьшаем кулдаун регенерации маны после удара
+	if magic_regen_cooldown > 0.0:
+		magic_regen_cooldown -= delta
+		
+	# 2. АВТОМАТИЧЕСКАЯ РЕГЕНЕРАЦИЯ МАНЫ
+	if magic_regen_cooldown <= 0.0 and active_magic_limit > 0 and current_magic_hp < active_magic_limit:
+		
+		# Копим время. Каждую секунду сюда будет прибавляться 1.0
+		regen_accumulator += delta
+		
+		# Как только накопилось достаточно времени для восстановления 1 единицы маны (например, каждые 0.15 сек)
+		if regen_accumulator >= 0.15:
+			regen_accumulator = 0.0 # Сбрасываем накопитель
+			
+			# Прибавляем ровно 1 целую единицу ХП к нашему int-здоровью щита
+			current_magic_hp = clampi(current_magic_hp + 1, 0, active_magic_limit)
+			
+			# Обновляем UI строго в этот микрокадр, когда значение РЕАЛЬНО изменилось!
+			Global.update_hearts_display()
+	else:
+		# Рекомендуется сбрасывать аккумулятор, если регенерация прервана (например, получен удар),
+		# чтобы при возобновлении регенерации тик не происходил мгновенно.
+		regen_accumulator = 0.0
+
 	if invulnerability_timer > 0.0:
 		invulnerability_timer -= delta
 	var direction = Input.get_axis("move_left", "move_right")
@@ -290,19 +341,63 @@ func check_magic_hearts_activation() -> void:
 	max_magic_hp = 0
 	Global.update_hearts_display()
 	
+func update_amulet_stats() -> void:
+	# Читаем строго 5-й индекс инвентаря, куда синхронизация сохраняет амулеты
+	var amulet_data = Global.inventory[5]
+	
+	if amulet_data != null:
+		# Проверяем, есть ли у этого ресурса поле mana_bonus
+		if "mana_bonus" in amulet_data:
+			active_magic_limit = amulet_data.mana_bonus
+			
+			# Если при надевании щит пустой, заполняем его маной до лимита
+			if current_magic_hp == 0:
+				current_magic_hp = active_magic_limit
+				
+			# Если маны вдруг стало больше нового лимита (например, переодели амулет похуже), срезаем
+			if current_magic_hp > active_magic_limit:
+				current_magic_hp = active_magic_limit
+		else:
+			active_magic_limit = 0
+			current_magic_hp = 0
+	else:
+		# Если амулет снят (в слоте null) — полностью тушим магический щит
+		active_magic_limit = 0
+		current_magic_hp = 0
+		
+	print("[АМУЛЕТ]: Статы пересчитаны. Лимит: ", active_magic_limit, " / Текущая мана: ", current_magic_hp)
+	
+	# Просим UI перерисовать синие сердечки поверх красных
+	Global.update_hearts_display()
+	
+	
 func take_damage(amount: int, enemy_area: Area2D):
 	if is_dead:
 		return
-	
-	current_hp -= amount
+		
+	# Вешаем запрет на восстановление маны на 4 секунды после любого удара
+	magic_regen_cooldown = 4.0
 	invulnerability_timer = 1.5
-	print("[ИГРОК] Получил урон: ", amount, ". Осталось ХП: ", current_hp)
+	
+	# === РАСПРЕДЕЛЕНИЕ УРОНА В МАГИЧЕСКИЙ ЩИТ ===
+	if current_magic_hp > 0:
+		if current_magic_hp >= amount:
+			# Щит полностью поглотил урон
+			current_magic_hp -= amount
+			amount = 0
+		else:
+			# Щит разрушен, остаток урона летит дальше
+			amount -= current_magic_hp
+			current_magic_hp = 0
+			
+	# Наносим остаточный урон по красному здоровью
+	current_hp -= amount
+	print("[ИГРОК] Получил урон. Мана: ", current_magic_hp, " | Обычное ХП: ", current_hp)
 	
 	Global.update_hearts_display()
 	if current_hp <= 0:
 		is_dead = true
 		current_hp = 0
-		# _start_death_logic()
 		
 	if enemy_area != null:
 		if enemy_area.global_position.x < global_position.x:
@@ -311,11 +406,10 @@ func take_damage(amount: int, enemy_area: Area2D):
 			velocity.x = -350.0
 		velocity.y = -150.0
 		knockback_timer = 0.2
-
 		
-	if amount:
+	if amount > 0:
 		sprite.modulate = Color(10, 1, 1) # Гипер-красный
-		get_tree().create_timer(0.15).timeout.connect(func(): sprite.modulate = Color(1, 1, 1))
+		get_tree().create_timer(0.15).timeout.connect(func(): if is_instance_valid(sprite): sprite.modulate = Color(1, 1, 1))
 
 		
 func _start_death_logic() -> void:
